@@ -1,0 +1,242 @@
+  @import '@fontsource/inter/400.css';
+@import '@fontsource/bebas-neue/400.css';
+  
+  :root {
+  --font-display: 'Bebas Neue', sans-serif; /* títulos gigantes */
+  --font-body:    'InterVariable', sans-serif; /* texto UI / nav */
+
+  /* Neutros */
+  --clr-bg-dark: #1D1D1D;   /* “negro” (fondo y texto claro encima) */
+  --clr-bg-light: #E1E1E1;  /* “blanco” (fondos claros o texto oscuro) */
+
+  /* Texto */
+  --clr-text-light: var(--clr-bg-light);   /* texto claro sobre fondos oscuros */
+  --clr-text-dark:  var(--clr-bg-dark);    /* texto oscuro sobre fondos claros */
+
+  /* Acento */
+  --clr-accent: #C9FE6E;    /* verde ALLWAKE */
+  --clr-accent-red: #D12E24;
+
+  /* Ejemplos de derivadas (opcional) */
+  --clr-accent-hover: color-mix(in srgb, var(--clr-accent) 80%, black); /* un verde un 20 % más oscuro */
+  --clr-border-subtle: color-mix(in srgb, var(--clr-bg-light) 15%, var(--clr-bg-dark));
+}
+
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--clr-bg-light);
+  }
+
+  .hero-imgs > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
+  }
+
+  .hero {
+    width: 100vw;
+    height: 100vh;
+    padding: 3em;
+  }
+
+  .pre-loader {
+    width: 200%;
+    height: 100%;
+    padding: 2em;
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 0.5em;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  .pre-loader p {
+    width: max-content;
+    text-transform: uppercase;
+    font-family: var(--font-display); 
+    font-size: 60px;
+    line-height: 60px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .counter {
+    height: 100px;
+    display: flex;
+    font-family: var(--font-display); 
+    font-size: 100px;
+    font-weight: 400;
+    line-height: 150px;
+    clip-path: polygon(0 0, 100% 0, 100% 100px, 0 100px);
+  }
+
+  .digit-1,
+  .digit-2,
+  .digit-3,
+  .digit-4 {
+    position: relative;
+    top: -15px;
+  }
+
+  .offset {
+    position: relative;
+    right: -7.5px;
+  }
+
+  .progress-bar {
+    position: relative;
+    top: -15px;
+    width: 0%;
+    height: 4px;
+    background: var(--clr-text-dark);
+  }
+
+  .hero-imgs {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .website-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    padding: 2em;
+  }
+
+  nav > div {
+    flex: 1;
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--clr-text-light);
+    text-transform: uppercase;
+  }
+
+
+ 
+
+  .logo img {
+                              
+    height: 2.2rem;         
+  }
+
+  /* ------------------------------------------------- */
+/* HERO COPY LAYOUT                                  */
+/* ------------------------------------------------- */
+.hero-copy{
+  position:absolute;     /* flota sobre la imagen  */
+  inset:0;               /* ocupa todo el hero     */
+  display:flex;          /* dos columnas            */
+  justify-content:center;
+  align-items:center;
+  gap:4vw;
+  padding:0 3rem;
+  pointer-events:none;   /* evita tap/click fantasma */
+}
+
+/* Izquierda – título grande */
+.copy-left h1{
+  font:400 12vw/0.9 var(--font-display);
+  color:var(--clr-text-light);
+  text-transform:uppercase;
+  letter-spacing:.01em;
+  /* estado inicial para animación */
+  opacity:0;
+  transform:translateY(80px);
+}
+
+/* Derecha – párrafo + CTA */
+.copy-right{
+  max-width:28rem;
+}
+.copy-right p{
+  font:400 1.1rem/1.4 var(--font-body);
+  color:var(--clr-text-light);
+  margin-bottom:2rem;
+  opacity:0;
+  transform:translateY(80px);
+}
+.btn-primary{
+  display:inline-block;
+  font:500 1rem var(--font-body);
+  padding:.9rem 2.2rem;
+  background:var(--clr-accent);
+  color:var(--clr-text-dark);
+  text-decoration:none;
+  border-radius:50px;
+  transition:background .25s ease;
+  opacity:0;
+  transform:translateY(80px);
+}
+.btn-primary:hover{
+  background:var(--clr-accent-hover);
+}
+
+
+.logo img{ height:2rem; }           /* ≈ 32 px */
+
+
+
+
+
+
+
+
+  .menu {
+     font-family: var(--font-body);
+  font-weight: 400;
+  letter-spacing: .02em;
+    text-align: right;
+  } 
+
+
+
+  @media (max-width: 900px) {
+    .pre-loader {
+      padding: 1em;
+      gap: 0.5em;
+    }
+
+    .counter {
+      font-size: 70px;
+    }
+
+    .pre-loader p {
+      font-size: 40px;
+      line-height: 64px;
+    }
+
+    .offset {
+      position: relative;
+      right: -5px;
+    }
+  }
