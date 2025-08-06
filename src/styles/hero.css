@@ -1,4 +1,4 @@
-  @import '@fontsource/inter/400.css';
+@import '@fontsource/inter/400.css';
 @import '@fontsource/bebas-neue/400.css';
   
   :root {
@@ -34,7 +34,7 @@
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background: var(--clr-bg-light);
+    background: var(--clr-accent);
   }
 
   .hero-imgs > img {
@@ -156,16 +156,18 @@
   position:absolute;     /* flota sobre la imagen  */
   inset:0;               /* ocupa todo el hero     */
   display:flex;          /* dos columnas            */
-  justify-content:center;
-  align-items:center;
+  justify-content:flex-start;
+  align-items:flex-end;
   gap:4vw;
-  padding:0 3rem;
+  padding: 0 3rem;
+  padding-left: 2rem;
+  padding-bottom: 4rem; /* Espacio desde el fondo */
   pointer-events:none;   /* evita tap/click fantasma */
 }
 
 /* Izquierda – título grande */
 .copy-left h1{
-  font:400 12vw/0.9 var(--font-display);
+  font: 400 5.8vw/0.9 var(--font-display); 
   color:var(--clr-text-light);
   text-transform:uppercase;
   letter-spacing:.01em;
@@ -176,33 +178,72 @@
 
 /* Derecha – párrafo + CTA */
 .copy-right{
-  max-width:28rem;
+  max-width: 30rem;
+  text-align: left; 
+  margin: 0 auto; 
+  line-height: 1.1;
 }
 .copy-right p{
-  font:400 1.1rem/1.4 var(--font-body);
+  font:400 1.375rem/1.4 var(--font-body);
   color:var(--clr-text-light);
   margin-bottom:2rem;
   opacity:0;
   transform:translateY(80px);
 }
-.btn-primary{
-  display:inline-block;
-  font:500 1rem var(--font-body);
-  padding:.9rem 2.2rem;
-  background:var(--clr-accent);
-  color:var(--clr-text-dark);
-  text-decoration:none;
-  border-radius:50px;
-  transition:background .25s ease;
-  opacity:0;
-  transform:translateY(80px);
+
+
+/* Botón skew animado */
+.btn-primary {
+  background: var(--clr-accent);
+  border: none;
+  padding: 10px 20px;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  width: auto;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  pointer-events: auto;
+  color: var(--clr-text-dark);
+  font-family: var(--font-body);
+  opacity: 0;
+  transform: translateY(80px) skew(-21deg); /* Combinamos ambos transforms */
 }
-.btn-primary:hover{
-  background:var(--clr-accent-hover);
+
+.btn-primary span {
+  display: inline-block;
+  transform: skew(21deg);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 100%;
+  left: 0;
+  background: var(--clr-bg-dark);
+  opacity: 0;
+  z-index: -1;
+  transition: all 0.5s;
+}
+
+.btn-primary:hover {
+  color: var(--clr-accent);
+}
+
+.btn-primary:hover::before {
+  left: 0;
+  right: 0;
+  opacity: 1;
 }
 
 
-.logo img{ height:2rem; }           /* ≈ 32 px */
+.logo img{ 
+  height:2.8rem; 
+  margin-top: -.8rem;
+}           
 
 
 
