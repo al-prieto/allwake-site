@@ -1,2 +1,9 @@
-import './hero.js';
+// src/main.js
+import './styles/hero.css';
+import './styles/section-two.css';
 
+import { initAnimations } from './animations/index.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+  initAnimations();
+});

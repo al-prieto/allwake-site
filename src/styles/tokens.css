@@ -1,0 +1,27 @@
+/* src/styles/tokens.css */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/bebas-neue/400.css';
+
+:root {
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'InterVariable', sans-serif;
+
+  /* Neutros */
+  --clr-bg-dark: #1d1d1d;
+  --clr-bg-light: #e1e1e1;
+
+  /* Texto */
+  --clr-text-light: var(--clr-bg-light);
+  --clr-text-dark: var(--clr-bg-dark);
+
+  /* Acentos */
+  --clr-accent: #c9fe6e;
+  --clr-accent-red: #d12e24;
+
+  --clr-accent-hover: color-mix(in srgb, var(--clr-accent) 80%, black);
+  --clr-border-subtle: color-mix(
+    in srgb,
+    var(--clr-bg-light) 15%,
+    var(--clr-bg-dark)
+  );
+}

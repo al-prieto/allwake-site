@@ -1,0 +1,25 @@
+.section-two {
+  width: 100vw;
+  min-height: 100vh; /* Cambiado de height a min-height */
+  background: var(--clr-bg-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem; /* Más padding */
+  position: relative;
+  z-index: 10;
+}
+
+.section-content {
+  max-width: 1000px; /* Reducido un poco */
+  width: 100%;
+  text-align: center;
+}
+
+.main-text {
+  font: 400 3.5vw/1.3 var(--font-display); /* Un poco más pequeño */
+  color: var(--clr-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
