@@ -81,9 +81,6 @@ export default function heroAnimation() {
   animate(digit2, 6);
   animate(digit1, 2, 5);
 
-  // Configuración inicial: bloquear scroll durante loading
-  gsap.set(['html', 'body'], { overflowY: 'hidden', overflowX: 'hidden' });
-
   // Barra de progreso
   gsap.to('.progress-bar', {
     width: '30%',
@@ -91,6 +88,8 @@ export default function heroAnimation() {
     ease: 'power4.inOut',
     delay: 7,
   });
+  // Al cargar la página, bloquea scroll vertical
+  gsap.set(['html', 'body'], { overflowY: 'hidden', overflowX: 'hidden' });
 
   gsap.to('.progress-bar', {
     width: '100%',
@@ -101,13 +100,14 @@ export default function heroAnimation() {
     onComplete: () => {
       gsap.set('.pre-loader', { display: 'none' });
 
-      // Re-habilitar scroll vertical, mantener horizontal bloqueado
+      // ✅ Re-habilita scroll vertical
       gsap.set(['html', 'body'], {
         overflowY: 'auto',
         overflowX: 'hidden',
         height: 'auto',
       });
 
+      // Garantiza que arranque desde arriba
       window.scrollTo(0, 0);
     },
   });
@@ -120,6 +120,13 @@ export default function heroAnimation() {
     stagger: 0.25,
     delay: 9,
   });
+  // 🔍 AGREGAR AQUÍ:
+  gsap.delayedCall(9, () => {
+    console.log(
+      '🔍 Delay 9 - ¿Hay scroll horizontal?',
+      document.body.scrollWidth > document.body.clientWidth
+    );
+  });
 
   // Zoom del hero
   gsap.to('.hero', {
@@ -129,12 +136,27 @@ export default function heroAnimation() {
     delay: 9,
   });
 
+  gsap.delayedCall(10, () => {
+    console.log(
+      '🔍 Delay 10 - ¿Hay scroll horizontal?',
+      document.body.scrollWidth > document.body.clientWidth
+    );
+  });
+
   // Aparece el nav
   gsap.to('nav', {
     y: 0,
     duration: 1,
     ease: 'power3.out',
     delay: 11,
+  });
+
+  // 🔍 AGREGAR AQUÍ:
+  gsap.delayedCall(11, () => {
+    console.log(
+      '🔍 Delay 11 - ¿Hay scroll horizontal?',
+      document.body.scrollWidth > document.body.clientWidth
+    );
   });
 
   // Animación por letra del H1
@@ -155,5 +177,6 @@ export default function heroAnimation() {
       '.btn-primary',
       { y: 0, opacity: 1, transform: 'skew(-21deg)', duration: 1 },
       '-=0.8'
-    );
+    )
+    .set('html, body', { overflowY: 'visible', overflowX: 'hidden' }, '+=0.5');
 }
