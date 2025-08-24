@@ -10,6 +10,7 @@ export function initParallax() {
 
   const hero = document.querySelector('.hero');
   const sectionTwo = document.querySelector('.section-two');
+  const heroCopy = document.querySelector('.hero-copy');
 
   if (!hero || !sectionTwo) {
     console.warn('Hero o Section Two no encontrados');
@@ -58,6 +59,24 @@ export function initParallax() {
 
     // ✅ Remover markers para producción
     // markers: true
+  });
+
+  // Text blur + fade effect
+  ScrollTrigger.create({
+    trigger: sectionTwo,
+    start: 'top bottom',
+    end: 'top center',
+    onUpdate: (self) => {
+      const progress = self.progress;
+
+      const opacity = 1 - progress;
+      const blurAmount = progress * 10;
+
+      gsap.set(heroCopy, {
+        opacity: opacity,
+        filter: `blur(${blurAmount}px)`,
+      });
+    },
   });
 
   // ✅ Función de limpieza mejorada

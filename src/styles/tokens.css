@@ -7,16 +7,19 @@
   --font-body: 'InterVariable', sans-serif;
 
   /* Neutros */
-  --clr-bg-dark: #1d1d1d;
+  --clr-bg-dark: #1a1a1a;
   --clr-bg-light: #e1e1e1;
-
+  --clr-neutral-warm: #ede8d0;
+  /* #ede8d0 */
+  /* #f7f3ef */
   /* Texto */
   --clr-text-light: var(--clr-bg-light);
   --clr-text-dark: var(--clr-bg-dark);
-
+  /* #f7f3ef */
   /* Acentos */
   --clr-accent: #c9fe6e;
-  --clr-accent-red: #d12e24;
+  /* #ccff00 */
+  /* #c9fe6e */
 
   --clr-accent-hover: color-mix(in srgb, var(--clr-accent) 80%, black);
   --clr-border-subtle: color-mix(
