@@ -1,54 +1,120 @@
 /* src/styles/section-two.css */
 
+/* ================================================
+    Section Two — Container
+    ----------------------------------------------- */
 .section-two {
   width: 100vw;
-  min-height: 100vh; /* Cambiado de height a min-height */
+  min-height: 100vh;
   background: var(--clr-neutral-warm);
   display: flex;
   align-items: center;
   justify-content: center;
   padding-inline: 2rem;
-  padding-block: 20rem; /* fijo en desktop */
+  padding-block: 16rem;
   position: relative;
   z-index: 10;
+  overflow: hidden;
 }
 
+/* ================================================
+    Section Two — Foreground Content (copy wrapper)
+    ----------------------------------------------- */
 .section-content {
-  max-width: 680px; /* Reducido un poco */
+  max-width: 680px;
   width: 100%;
   text-align: center;
+  position: relative;
+  z-index: 1; /* ensure copy is above the BG */
 }
 
+/* ================================================
+    Section Two — Main Text (animated)
+    ----------------------------------------------- */
 .main-text {
-  font: 400 3.5vw/1.3 var(--font-display); /* Un poco más pequeño */
+  font: 400 clamp(1.3rem, 2.8vw, 3.2rem) / 1.32 var(--font-display);
   color: var(--clr-text-dark);
   text-transform: uppercase;
   letter-spacing: -0.01em;
   margin: 0;
   line-height: 102%;
   text-align: center;
-  text-wrap: balance; /* Balancea las líneas */
-  hyphens: none; /* Evita guiones */
+  text-wrap: balance;
+  hyphens: none;
 }
 
-/* Evita quiebres dentro de una palabra animada */
+/* ================================================
+    SplitText helpers (GSAP)
+    ----------------------------------------------- */
 .split-word {
   display: inline-block;
-} /* las palabras no se parten internamente */
+}
 .split-char {
   display: inline-block;
-} /* necesario para animar letra a letra */
+}
 
-/* Refuerzo de tipografía de .main-text */
+/* Avoid unexpected word breaks on the main text */
 .section-two .main-text {
   overflow-wrap: normal;
-  word-break: normal; /* asegura que no haya break-all por ahí */
+  word-break: normal;
   hyphens: none;
-  /* text-wrap: balance;  <- lo puedes dejar, pero no evita por sí solo el corte dentro de palabras */
 }
 
+/* ================================================
+    Responsive
+    ----------------------------------------------- */
 @media (max-width: 1200px) {
   .section-two {
-    padding-block: clamp(4rem, 10vw, 20rem); /* reduce solo cuando haga falta */
+    padding-block: clamp(4rem, 10vw, 20rem);
   }
 }
+
+/* ================================================
+    Background Headline (THE / VISION)
+    ----------------------------------------------- */
+.bg-headline {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column; /* THE on top, VISION below */
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2rem, 5vh, 6rem);
+  pointer-events: none;
+  z-index: 0;
+  contain: layout paint;
+  transform: translateY(4vh); /* small adjustment down */
+}
+
+.bg-headline .bg-line {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 0.95;
+  white-space: nowrap;
+  font-size: clamp(7rem, 22vw, 30rem);
+
+  /* gradient opacity effect using your --clr-text-dark */
+  background-image: linear-gradient(
+    to bottom,
+    rgb(from var(--clr-text-dark) r g b / 0.2) 0%,
+    /* lighter top */ rgb(from var(--clr-text-dark) r g b / 0.4) 100%
+      /* stronger bottom */
+  );
+  -webkit-background-clip: text; /* Chrome/Safari/Edge */
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* Firefox (newer versions) */
+  color: transparent; /* fallback */
+  /* no global opacity here; let the gradient drive the perceived strength */
+}
+
+/* ================================================
+    Background Headline — Per-line tweaks (kept neutral)
+    ----------------------------------------------- */
+.bg-headline .bg-line:first-child {
+  opacity: 1;
+} /* THE */
+.bg-headline .bg-line:last-child {
+  opacity: 1;
+} /* VISION */
