@@ -1,0 +1,75 @@
+/* src/styles/marquee.css */
+
+/* -----------------------------------------------
+   Marquee — container
+   ----------------------------------------------- */
+.marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden; /* hide moving track overflow */
+  background: var(--clr-neutral-warm);
+  padding-block: clamp(2rem, 6vw, 6rem);
+}
+
+/* Soft edge fade so text seems to enter/exit smoothly */
+.marquee::before,
+.marquee::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(2rem, 6vw, 10rem);
+  pointer-events: none;
+  z-index: 1;
+  -webkit-mask-image: linear-gradient(to right, black, transparent);
+  mask-image: linear-gradient(to right, black, transparent);
+}
+.marquee::before {
+  left: 0;
+}
+.marquee::after {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+/* -----------------------------------------------
+   Marquee — track & text
+   ----------------------------------------------- */
+/* Track (single row, no gaps) */
+.marquee__track {
+  display: inline-block;
+  white-space: nowrap; /* never wrap to a new line */
+  will-change: transform;
+  font-size: 0; /* kill inline-block whitespace between children */
+}
+
+/* Big text inside the track */
+.marquee__text {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  /* spacing between copies (used by JS to measure distance) */
+  margin-right: clamp(3rem, 5vw, 6rem);
+
+  /* type */
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.2rem, 9vw, 10rem);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--clr-text-dark);
+  /* si aún la quieres tenue: opacity: .16; */
+}
+
+/* -----------------------------------------------
+   Accessibility
+   ----------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    transform: none !important;
+  }
+  .marquee__text[aria-hidden='true'] {
+    display: none;
+  }
+}
