@@ -73,3 +73,31 @@
     display: none;
   }
 }
+
+/* ---- Per-char blur wave ---------------- */
+/* Each character will get this class from JS */
+.marquee__char {
+  display: inline-block;
+  will-change: filter, opacity;
+  animation: charWave var(--waveDur, 2.2s) linear infinite;
+}
+
+/* shape of the wave: brief blur then back to crisp */
+@keyframes charWave {
+  0%,
+  60%,
+  100% {
+    filter: blur(0px);
+    opacity: 1;
+  }
+  30% {
+    filter: blur(var(--blurMax, 3px));
+    opacity: var(--blurOpacity, 0.65);
+  }
+}
+
+/* safety: ensure no shadows are coloring the blur */
+.marquee__text,
+.marquee__char {
+  text-shadow: none !important;
+}
