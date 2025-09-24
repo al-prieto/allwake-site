@@ -1,0 +1,64 @@
+/* src/styles/section-showcase.css */
+
+/* --------------------- ROOT VARIABLES --------------------- */
+:root {
+  --d: calc(100vw / 12);
+}
+
+/* --------------------- MAIN SECTION --------------------- */
+.section-showcase {
+  position: relative;
+  color: var(--clr-text-light);
+  /* Exact seam: cream top to half diameter, black bottom */
+  --split: calc(var(--d) / 2);
+  background: linear-gradient(
+    to bottom,
+    var(--clr-neutral-warm) 0 var(--split),
+    var(--clr-bg-dark) var(--split)
+  );
+  isolation: isolate;
+  overflow: visible;
+  z-index: 0;
+}
+
+/* --------------------- SEAM CONTAINER --------------------- */
+.seam {
+  position: relative;
+  height: var(--split);
+  background: transparent;
+  overflow: visible;
+  z-index: 1;
+}
+
+/* --------------------- CIRCLES LAYOUT --------------------- */
+.l-circles {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  margin: 0 0 0 50%;
+  transform: translate(-50%, 0);
+  position: relative;
+  z-index: 2;
+}
+
+.dot {
+  width: 8.3vw;
+  height: 8.3vw;
+  border-radius: 100%;
+  background: var(--clr-bg-dark);
+  will-change: transform;
+  transform: scale(1, 0);
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+/* --------------------- SECTION BODY --------------------- */
+.section-showcase__body {
+  min-height: 40vh;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

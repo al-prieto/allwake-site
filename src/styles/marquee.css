@@ -1,10 +1,7 @@
 /* src/styles/marquee.css */
 
-/* ================================================
-   Marquee — container (ICEBERG style)
-   ------------------------------------------------ */
+/* --------------------- MARQUEE CONTAINER --------------------- */
 .marquee {
-  /* Height of the band. Tweak this single var. */
   --marquee-h: clamp(14rem, 28vh, 36rem);
 
   position: relative;
@@ -17,7 +14,7 @@
   background: var(--clr-neutral-warm);
 }
 
-/* Soft edge fade so the text appears to enter/exit smoothly */
+/* Soft edge fade effects */
 .marquee::before,
 .marquee::after {
   content: '';
@@ -29,17 +26,17 @@
   z-index: 3;
   background: linear-gradient(to right, var(--clr-neutral-warm), transparent);
 }
+
 .marquee::before {
   left: 0;
 }
+
 .marquee::after {
   right: 0;
   transform: scaleX(-1);
 }
 
-/* ================================================
-   Marquee — ICEBERG blur-sentence style
-   ------------------------------------------------ */
+/* --------------------- BLUR SENTENCE LAYOUT --------------------- */
 .blur-sentence {
   position: relative;
   z-index: 1;
@@ -57,11 +54,8 @@
   margin: 0;
   padding: 0;
   margin-right: clamp(3rem, 5vw, 6rem);
-
-  /* Typography usando cálculos similares a ICEBERG */
   font-family: var(--font-display);
-  font-weight: 400; /* Bebas Neue is already bold */
-  /* TAMAÑO MÁS GRANDE - similar a ICEBERG */
+  font-weight: 400;
   font-size: clamp(3.5rem, 14.3vw, 275px);
   line-height: 1;
   text-transform: uppercase;
@@ -69,56 +63,42 @@
   color: var(--clr-text-dark);
 }
 
-/* Character-by-character blur animation (ICEBERG style auténtico) */
+/* --------------------- BLUR ANIMATION --------------------- */
 .blur-sentence__sentence.is-animated .char {
   position: relative;
   display: inline-block;
   animation-name: iceberg-blur-tight;
-  animation-duration: 10s; /* velocidad global */
+  animation-duration: 10s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   color: transparent;
   text-shadow: 0 0 0 var(--clr-text-dark);
-
-  /* === knobs === */
-  --pulse: 0.045; /* 4.5% del ciclo → pulso MUY corto */
-  --stagger: 0.16s; /* separación entre letras */
-
-  /* escalonado por índice (añadido en JS con style="--i:…") */
+  --pulse: 0.045;
+  --stagger: 0.16s;
   animation-delay: calc(var(--i) * var(--stagger) * -1);
 }
 
-/* ICEBERG blur keyframes — pulso estrecho */
+/* --------------------- KEYFRAME ANIMATIONS --------------------- */
 @keyframes iceberg-blur-tight {
   0% {
     text-shadow: 0 0 0 var(--clr-text-dark);
   }
-
-  /* subida rápida */
   4% {
     text-shadow: 0 0 clamp(8px, 2.5vw, 24px) var(--clr-text-dark);
   }
-
-  /* pico breve */
   5% {
     text-shadow: 0 0 clamp(10px, 3vw, 28px) var(--clr-text-dark);
   }
-
-  /* bajada rápida */
   7% {
     text-shadow: 0 0 clamp(6px, 2vw, 18px) var(--clr-text-dark);
   }
-  9% {
-    text-shadow: 0 0 0 var(--clr-text-dark);
-  }
-
-  /* resto del ciclo sin blur */
+  9%,
   100% {
     text-shadow: 0 0 0 var(--clr-text-dark);
   }
 }
 
-/* Responsive blur intensity — mismo pulso corto, solo menos fuerza */
+/* --------------------- RESPONSIVE ANIMATIONS --------------------- */
 @media (max-width: 1023px) {
   @keyframes iceberg-blur-tight {
     0% {
@@ -133,9 +113,7 @@
     7% {
       text-shadow: 0 0 clamp(5px, 1.8vw, 16px) var(--clr-text-dark);
     }
-    9% {
-      text-shadow: 0 0 0 var(--clr-text-dark);
-    }
+    9%,
     100% {
       text-shadow: 0 0 0 var(--clr-text-dark);
     }
@@ -156,35 +134,19 @@
     7% {
       text-shadow: 0 0 clamp(3px, 1.2vw, 10px) var(--clr-text-dark);
     }
-    9% {
-      text-shadow: 0 0 0 var(--clr-text-dark);
-    }
+    9%,
     100% {
       text-shadow: 0 0 0 var(--clr-text-dark);
     }
   }
 }
 
-/* NUEVO SISTEMA DE GRUPOS - (mantener comentado mientras usas el escalonado global)
-   ------------------------------------------------------------------- */
-/*
-.blur-sentence__sentence.is-animated .char:nth-child(30n + 1),
-.blur-sentence__sentence.is-animated .char:nth-child(30n + 2) {
-  animation-delay: 0s; 
-}
-.blur-sentence__sentence.is-animated .char:nth-child(30n + 18) {
-  animation-delay: 4s;
-}
-.blur-sentence__sentence.is-animated .char:nth-child(30n + 2) {
-  animation-delay: 0.8s;
-}
-*/
-
-/* Accessibility */
+/* --------------------- ACCESSIBILITY --------------------- */
 @media (prefers-reduced-motion: reduce) {
   .blur-sentence__sentence {
     transform: none !important;
   }
+
   .blur-sentence__sentence.is-animated .char {
     animation: none;
     color: var(--clr-text-dark);
