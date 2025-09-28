@@ -55,10 +55,56 @@
 }
 
 /* --------------------- SECTION BODY --------------------- */
+/* ====== Showcase — Title (con tus tokens) ====== */
+.mwg_landing1 {
+  text-align: center;
+  margin: 0; /* quita el 10vh si quieres centrar exacto */
+  padding: 0 2rem;
+
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 0.95;
+  color: var(--clr-text-light);
+  /* tamaño fluido tipo hero */
+  font-size: clamp(2.2rem, 8vw, 7.2rem);
+}
+
+/* Split helpers (mantén estos) */
+.mwg_landing1 .word {
+  display: inline-block;
+}
+.mwg_landing1 .letter {
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  margin: -0.28em -0.1em -0.05em;
+  padding: 0 0.1em 0.05em;
+}
+.mwg_landing1 .letter > span {
+  display: inline-block;
+  transform: translateY(102%); /* estado inicial: oculto hacia abajo */
+  will-change: transform;
+}
+
+/* Body de la sección (lo tuyo + nota) */
 .section-showcase__body {
   min-height: 40vh;
   background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-block: 16rem; /* si te “baja” demasiado el título, reduce este valor */
+}
+
+/* el body de la sección queda por encima de .l-circles (z:2) */
+.section-showcase__body {
+  position: relative;
+  z-index: 3;
+}
+
+/* opcional: refuerzo al propio h2 si lo necesitas */
+.mwg_landing1 {
+  position: relative;
+  z-index: 3;
 }
