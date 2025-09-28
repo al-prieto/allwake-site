@@ -4,6 +4,7 @@ import './styles/hero.css';
 import './styles/section-two.css';
 import './styles/marquee.css';
 import './styles/section-showcase.css';
+import './styles/allwake-carousel.css';
 
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';

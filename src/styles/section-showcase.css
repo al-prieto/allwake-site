@@ -64,10 +64,11 @@
   font-family: var(--font-display);
   font-weight: 400;
   letter-spacing: 0.01em;
-  line-height: 0.95;
+  line-height: 1.1;
   color: var(--clr-text-light);
   /* tamaño fluido tipo hero */
-  font-size: clamp(2.2rem, 8vw, 7.2rem);
+  /* font-size: clamp(2.2rem, 8vw, 7.2rem); */
+  font-size: clamp(2.8rem, 7vw, 6.8rem);
 }
 
 /* Split helpers (mantén estos) */
@@ -89,12 +90,13 @@
 
 /* Body de la sección (lo tuyo + nota) */
 .section-showcase__body {
-  min-height: 40vh;
+  min-height: 50vh;
   background: transparent;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding-block: 16rem; /* si te “baja” demasiado el título, reduce este valor */
+  justify-content: flex-start;
+  padding-block: 16rem 4rem; /* si te “baja” demasiado el título, reduce este valor */
+  flex-direction: column;
 }
 
 /* el body de la sección queda por encima de .l-circles (z:2) */

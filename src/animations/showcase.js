@@ -4,45 +4,48 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* --------------------- UTILITY FUNCTIONS --------------------- */
+/* --------------------- UTILITIES --------------------- */
 
-// Split text into letters with word/letter structure
+// Split del título a NIVEL DE CARÁCTER (espacios como nodos de texto)
+// src/animations/showcase.js  ➜ reemplaza splitToLetters por esto
 function splitToLetters(rootEl) {
   if (!rootEl) return { letters: [], root: null };
 
-  const text = rootEl.textContent.trim().replace(/\s+/g, ' ');
-  const words = text.split(' ');
-
-  // Clear and rebuild
+  // Guardamos los nodos actuales (incluye <br>)
+  const nodes = Array.from(rootEl.childNodes);
   rootEl.textContent = '';
+
   const frag = document.createDocumentFragment();
 
-  words.forEach((w, wi) => {
-    const word = document.createElement('span');
-    word.className = 'word';
+  nodes.forEach((node) => {
+    if (node.nodeType === Node.ELEMENT_NODE && node.nodeName === 'BR') {
+      // Conservar los <br>
+      frag.appendChild(document.createElement('br'));
+      return;
+    }
 
-    [...w].forEach((ch) => {
-      const outer = document.createElement('span');
-      outer.className = 'letter';
-      const inner = document.createElement('span');
-      inner.textContent = ch;
-      outer.appendChild(inner);
-      word.appendChild(outer);
-    });
-
-    frag.appendChild(word);
-    if (wi < words.length - 1) {
-      frag.appendChild(document.createTextNode(' '));
+    // Para nodos de texto, construir letras
+    const text = (node.textContent || '').replace(/\s+/g, ' ');
+    for (const ch of text) {
+      if (ch === ' ') {
+        frag.appendChild(document.createTextNode(' '));
+      } else {
+        const outer = document.createElement('span');
+        outer.className = 'letter';
+        const inner = document.createElement('span');
+        inner.textContent = ch;
+        outer.appendChild(inner);
+        frag.appendChild(outer);
+      }
     }
   });
 
   rootEl.appendChild(frag);
   const letters = Array.from(rootEl.querySelectorAll('.letter > span'));
-
   return { letters, root: rootEl };
 }
 
-// Shuffle array utility (CLAVE para el efecto)
+// Shuffle array (para el efecto aleatorio)
 function shuffle(arr) {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -52,9 +55,8 @@ function shuffle(arr) {
   return a;
 }
 
-/* --------------------- ANIMATION FUNCTIONS --------------------- */
+/* --------------------- ANIMATIONS --------------------- */
 
-// Title animation con shuffle (como el sitio de referencia)
 function initShowcaseTitle(section) {
   const title = section.querySelector('.mwg_landing1');
   if (!title) return;
@@ -62,16 +64,13 @@ function initShowcaseTitle(section) {
   const { letters, root } = splitToLetters(title);
   if (!letters.length) return;
 
-  // 🔥 SHUFFLE las letras (esto es clave!)
   const shuffledLetters = shuffle(Array.from(letters));
 
-  // Estado inicial: todas las letras ocultas
-  gsap.set(letters, { y: '102%' }); // Usa 'y' en lugar de 'yPercent' para más control
+  // estado inicial: ocultas hacia abajo
+  gsap.set(letters, { y: '102%' });
 
-  // Altura del contenedor + buffer (como en el sitio de referencia)
   const containerHeight = root.clientHeight + 100;
 
-  // 🎯 Animar cada letra con delay basado en su posición en el array shuffled
   shuffledLetters.forEach((letter, index) => {
     gsap.to(letter, {
       y: 0,
@@ -87,7 +86,6 @@ function initShowcaseTitle(section) {
   });
 }
 
-// Circles animation with scaling effect
 function initCircles(section) {
   const row = section.querySelector('.l-circles');
   if (!row) return;
@@ -104,12 +102,12 @@ function initCircles(section) {
       trigger: row,
       start: 'top bottom',
       end: 'bottom 50%',
-      scrub: 0.8,
+      scrub: 0.8, // como lo tenías
     },
   });
 }
 
-/* --------------------- MAIN EXPORT FUNCTION --------------------- */
+/* --------------------- INIT --------------------- */
 
 export function initShowcase() {
   const section = document.querySelector('#showcase');
