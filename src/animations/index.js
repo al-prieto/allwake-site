@@ -6,6 +6,7 @@ import initMarquee from './marquee.js';
 import initIcebergMarquee from './marquee.js';
 import { initShowcase } from './showcase.js';
 import { initAllwakeCarousel } from './allwake-carousel.js';
+import { initScrollLines } from './scrollLines.js';
 
 export function initAnimations() {
   heroAnimation();
@@ -15,4 +16,5 @@ export function initAnimations() {
   initIcebergMarquee();
   initShowcase();
   initAllwakeCarousel();
+  initScrollLines();
 }

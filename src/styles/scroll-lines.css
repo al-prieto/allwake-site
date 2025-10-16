@@ -1,0 +1,84 @@
+/* src/styles/scroll-lines.css */
+/* ============================================
+   SCROLLING TEXT LINES (MWG-style)
+   ============================================ */
+
+/* SCROLLING TEXT LINES (MWG-style, scoped) */
+.scroll-lines {
+  padding: 10vh 0;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  color: var(--clr-text-light);
+}
+
+/* Lines */
+.scroll-lines .lines {
+  list-style: none;
+  display: grid;
+  gap: 1.1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.scroll-lines .line {
+  display: flex;
+  gap: 0.05em;
+  justify-content: center;
+}
+
+/* Letters */
+.scroll-lines .letter {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 0.8;
+  font-size: clamp(54px, 16vw, 250px);
+  overflow: hidden; /* máscara del slide */
+  height: 0.8em;
+  will-change: transform;
+}
+
+.scroll-lines .letter.space {
+  width: 0.28em;
+  height: 0.8em;
+  overflow: visible;
+}
+
+.scroll-lines .letter span {
+  display: inline-block;
+  position: relative;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  padding: 0.01em 0 0.08em; /* aire vertical */
+}
+
+/* El que sale (visible al inicio) */
+.scroll-lines .letter span:first-child {
+  z-index: 2;
+  transform: translateY(0%);
+}
+
+/* Duplicado que entra desde arriba */
+.scroll-lines .letter .letter-top {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  z-index: 1;
+  transform: translateY(0%);
+}
+
+/* Responsive fino */
+@media (max-width: 1024px) {
+  .scroll-lines .line {
+    gap: 0.03em;
+  }
+}
+@media (max-width: 768px) {
+  .scroll-lines .lines {
+    gap: 0.8rem;
+  }
+}
