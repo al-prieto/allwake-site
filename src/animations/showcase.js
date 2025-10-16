@@ -6,12 +6,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* --------------------- UTILITIES --------------------- */
 
-// Split del título a NIVEL DE CARÁCTER (espacios como nodos de texto)
-// src/animations/showcase.js  ➜ reemplaza splitToLetters por esto
+// Split del título a NIVEL DE CARÁCTER conservando <br>
 function splitToLetters(rootEl) {
   if (!rootEl) return { letters: [], root: null };
 
-  // Guardamos los nodos actuales (incluye <br>)
   const nodes = Array.from(rootEl.childNodes);
   rootEl.textContent = '';
 
@@ -19,12 +17,9 @@ function splitToLetters(rootEl) {
 
   nodes.forEach((node) => {
     if (node.nodeType === Node.ELEMENT_NODE && node.nodeName === 'BR') {
-      // Conservar los <br>
       frag.appendChild(document.createElement('br'));
       return;
     }
-
-    // Para nodos de texto, construir letras
     const text = (node.textContent || '').replace(/\s+/g, ' ');
     for (const ch of text) {
       if (ch === ' ') {
@@ -45,7 +40,7 @@ function splitToLetters(rootEl) {
   return { letters, root: rootEl };
 }
 
-// Shuffle array (para el efecto aleatorio)
+// Shuffle array (para el efecto aleatorio del título)
 function shuffle(arr) {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -57,6 +52,7 @@ function shuffle(arr) {
 
 /* --------------------- ANIMATIONS --------------------- */
 
+// Título (efecto actual con shuffle y triggers independientes)
 function initShowcaseTitle(section) {
   const title = section.querySelector('.mwg_landing1');
   if (!title) return;
@@ -66,7 +62,6 @@ function initShowcaseTitle(section) {
 
   const shuffledLetters = shuffle(Array.from(letters));
 
-  // estado inicial: ocultas hacia abajo
   gsap.set(letters, { y: '102%' });
 
   const containerHeight = root.clientHeight + 100;
@@ -86,6 +81,7 @@ function initShowcaseTitle(section) {
   });
 }
 
+// Círculos (tu ola actual)
 function initCircles(section) {
   const row = section.querySelector('.l-circles');
   if (!row) return;
@@ -102,7 +98,7 @@ function initCircles(section) {
       trigger: row,
       start: 'top bottom',
       end: 'bottom 50%',
-      scrub: 0.8, // como lo tenías
+      scrub: 0.8,
     },
   });
 }
@@ -115,4 +111,6 @@ export function initShowcase() {
 
   initCircles(section);
   initShowcaseTitle(section);
+
+  // (Eliminado) initScrollStack();
 }

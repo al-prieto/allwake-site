@@ -1,0 +1,83 @@
+/* src/styles/allwake-scroll-stack.css */
+/* ================= ALLWAKE WORD SCROLL ================= */
+
+/* --------------------- FIX COMPLETO - allwake-scroll-stack.css --------------------- */
+
+.aw-scroll-stack {
+  position: relative;
+  width: 100%;
+  padding-block: 12vh 8vh;
+  background: transparent;
+}
+
+.mwg_landing3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-bottom: 1px solid rgba(37, 37, 37, 1);
+  padding: 0 2rem;
+  margin: 0;
+  min-height: 50vh;
+}
+
+.aw-word-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.aw-word-item {
+  font-family: var(--font-display);
+  font-weight: 500; /* Cambio de 800 a 500 como el original */
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  color: var(--clr-text-light);
+
+  /* CRÍTICO: Este tamaño DEBE verse */
+  font-size: clamp(5rem, 17.36vw, 15.625rem); /* 250px base = 15.625rem */
+
+  /* NO overflow hidden aquí - lo necesita el .letter */
+  white-space: nowrap;
+  width: max-content;
+  margin: 0 auto;
+}
+
+/* Estructura de letras generada por JS */
+.aw-word-item .letter {
+  display: inline-block;
+  overflow: hidden; /* ← AQUÍ va el overflow */
+  position: relative;
+  margin: -0.28em -0.1em -0.05em; /* Como el original */
+  padding: 0 0.1em 0.05em;
+}
+
+.aw-word-item .letter > span {
+  display: inline-block;
+  transform: translateY(102%);
+  will-change: transform;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .aw-word-item {
+    font-size: clamp(4rem, 13.89vw, 12.5rem); /* 200px = 12.5rem */
+  }
+}
+
+@media (max-width: 768px) {
+  .mwg_landing3 {
+    min-height: 40vh;
+    padding: 0 1rem;
+  }
+
+  .aw-word-item {
+    font-size: clamp(2.8rem, 10.42vw, 5rem); /* 80px = 5rem */
+    line-height: 0.9;
+  }
+}
