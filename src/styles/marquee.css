@@ -1,20 +1,21 @@
-/* src/styles/marquee.css */
-
-/* --------------------- MARQUEE CONTAINER --------------------- */
+/* ===================== MARQUEE ===================== */
 .marquee {
-  --marquee-h: clamp(14rem, 28vh, 36rem);
+  /* Altura del bloque (ajústala libremente) */
+  --marquee-h: clamp(32rem, 75vh, 88rem);
+
+  /* Color del glow del blur (puedes cambiarlo a dark/light si quieres) */
+  --blur-color: var(--clr-accent);
 
   position: relative;
   width: 100%;
   height: var(--marquee-h);
-  padding: 0;
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: var(--clr-neutral-warm);
+  background: var(--clr-bg-dark);
 }
 
-/* Soft edge fade effects */
+/* Soft edge fade */
 .marquee::before,
 .marquee::after {
   content: '';
@@ -24,19 +25,17 @@
   width: clamp(2rem, 6vw, 10rem);
   pointer-events: none;
   z-index: 3;
-  background: linear-gradient(to right, var(--clr-neutral-warm), transparent);
+  background: linear-gradient(to right, var(--clr-bg-dark), transparent);
 }
-
 .marquee::before {
   left: 0;
 }
-
 .marquee::after {
   right: 0;
   transform: scaleX(-1);
 }
 
-/* --------------------- BLUR SENTENCE LAYOUT --------------------- */
+/* ===================== CONTENT ===================== */
 .blur-sentence {
   position: relative;
   z-index: 1;
@@ -60,96 +59,50 @@
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  color: var(--clr-text-dark);
+  color: var(--clr-text-light); /* texto base claro */
 }
 
-/* --------------------- BLUR ANIMATION --------------------- */
+/* Letras animadas con blur */
 .blur-sentence__sentence.is-animated .char {
   position: relative;
   display: inline-block;
-  animation-name: iceberg-blur-tight;
-  animation-duration: 10s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  color: transparent;
-  text-shadow: 0 0 0 var(--clr-text-dark);
+  animation: iceberg-blur-tight 10s linear infinite;
+  /* relleno visible (claro) + blur del color elegido */
+  color: var(--clr-text-light);
+  text-shadow: 0 0 0 var(--blur-color);
   --pulse: 0.045;
   --stagger: 0.16s;
   animation-delay: calc(var(--i) * var(--stagger) * -1);
 }
 
-/* --------------------- KEYFRAME ANIMATIONS --------------------- */
+/* ===================== KEYFRAMES ===================== */
+/* Usamos var(--blur-color) para controlar el glow */
 @keyframes iceberg-blur-tight {
   0% {
-    text-shadow: 0 0 0 var(--clr-text-dark);
+    text-shadow: 0 0 0 var(--blur-color);
   }
   4% {
-    text-shadow: 0 0 clamp(8px, 2.5vw, 24px) var(--clr-text-dark);
+    text-shadow: 0 0 clamp(8px, 2.5vw, 24px) var(--blur-color);
   }
   5% {
-    text-shadow: 0 0 clamp(10px, 3vw, 28px) var(--clr-text-dark);
+    text-shadow: 0 0 clamp(10px, 3vw, 28px) var(--blur-color);
   }
   7% {
-    text-shadow: 0 0 clamp(6px, 2vw, 18px) var(--clr-text-dark);
+    text-shadow: 0 0 clamp(6px, 2vw, 18px) var(--blur-color);
   }
   9%,
   100% {
-    text-shadow: 0 0 0 var(--clr-text-dark);
+    text-shadow: 0 0 0 var(--blur-color);
   }
 }
 
-/* --------------------- RESPONSIVE ANIMATIONS --------------------- */
-@media (max-width: 1023px) {
-  @keyframes iceberg-blur-tight {
-    0% {
-      text-shadow: 0 0 0 var(--clr-text-dark);
-    }
-    4% {
-      text-shadow: 0 0 clamp(6px, 2vw, 18px) var(--clr-text-dark);
-    }
-    5% {
-      text-shadow: 0 0 clamp(8px, 2.2vw, 22px) var(--clr-text-dark);
-    }
-    7% {
-      text-shadow: 0 0 clamp(5px, 1.8vw, 16px) var(--clr-text-dark);
-    }
-    9%,
-    100% {
-      text-shadow: 0 0 0 var(--clr-text-dark);
-    }
-  }
-}
-
-@media (max-width: 767px) {
-  @keyframes iceberg-blur-tight {
-    0% {
-      text-shadow: 0 0 0 var(--clr-text-dark);
-    }
-    4% {
-      text-shadow: 0 0 clamp(4px, 1.5vw, 12px) var(--clr-text-dark);
-    }
-    5% {
-      text-shadow: 0 0 clamp(6px, 1.8vw, 14px) var(--clr-text-dark);
-    }
-    7% {
-      text-shadow: 0 0 clamp(3px, 1.2vw, 10px) var(--clr-text-dark);
-    }
-    9%,
-    100% {
-      text-shadow: 0 0 0 var(--clr-text-dark);
-    }
-  }
-}
-
-/* --------------------- ACCESSIBILITY --------------------- */
+/* ===================== ACCESSIBILITY ===================== */
 @media (prefers-reduced-motion: reduce) {
   .blur-sentence__sentence {
     transform: none !important;
   }
-
   .blur-sentence__sentence.is-animated .char {
     animation: none;
-    color: var(--clr-text-dark);
     text-shadow: none;
   }
 }
