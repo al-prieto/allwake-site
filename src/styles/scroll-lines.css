@@ -1,18 +1,18 @@
 /* src/styles/scroll-lines.css */
 /* ============================================
-   SCROLLING TEXT LINES (MWG-style)
+   SCROLLING TEXT LINES (MWG-style, scoped)
    ============================================ */
 
-/* SCROLLING TEXT LINES (MWG-style, scoped) */
+/* Contenedor del efecto */
 .scroll-lines {
   padding: 10vh 0;
   display: grid;
   place-items: center;
-  isolation: isolate;
+  isolation: isolate; /* evita bleed de efectos */
   color: var(--clr-text-light);
 }
 
-/* Lines */
+/* Lista de líneas */
 .scroll-lines .lines {
   list-style: none;
   display: grid;
@@ -21,13 +21,14 @@
   padding: 0;
 }
 
+/* Cada línea (palabra/frase) */
 .scroll-lines .line {
   display: flex;
   gap: 0.05em;
   justify-content: center;
 }
 
-/* Letters */
+/* Cada letra (wrapper con máscara) */
 .scroll-lines .letter {
   position: relative;
   display: inline-block;
@@ -37,23 +38,25 @@
   line-height: 0.8;
   font-size: clamp(54px, 16vw, 250px);
   overflow: hidden; /* máscara del slide */
-  height: 0.8em;
+  height: 0.8em; /* altura visible de la letra */
   will-change: transform;
 }
 
+/* Espacio entre palabras */
 .scroll-lines .letter.space {
   width: 0.28em;
   height: 0.8em;
   overflow: visible;
 }
 
+/* Spans animables (sale/entra) */
 .scroll-lines .letter span {
   display: inline-block;
   position: relative;
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
-  padding: 0.01em 0 0.08em; /* aire vertical */
+  padding: 0.01em 0 0.08em; /* aire vertical para que no “toquen” */
 }
 
 /* El que sale (visible al inicio) */
@@ -62,7 +65,7 @@
   transform: translateY(0%);
 }
 
-/* Duplicado que entra desde arriba */
+/* El duplicado que entra desde arriba */
 .scroll-lines .letter .letter-top {
   position: absolute;
   bottom: 100%;
@@ -81,4 +84,8 @@
   .scroll-lines .lines {
     gap: 0.8rem;
   }
+}
+
+.scroll-lines {
+  padding: 10vh var(--grid-margin, 6vw);
 }

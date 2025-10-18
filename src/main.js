@@ -6,12 +6,14 @@ import './styles/marquee.css';
 import './styles/section-showcase.css';
 import './styles/allwake-carousel.css';
 import './styles/scroll-lines.css';
+import './styles/rays.css';
 
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 
 import { initAnimations } from './animations/index.js';
+import { initRays } from './animations/rays.js';
 
 gsap.registerPlugin(ScrollTrigger);
 

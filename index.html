@@ -54,7 +54,6 @@
     <div class="website-content">
       <nav>
         <div class="logo">
-          <!-- NOTE: adjust the path if your asset lives under /public/hero/ -->
           <img src="/alwake-logo2.svg" alt="Allwake Studio logo" />
         </div>
         <div class="menu"><p>Menu</p></div>
@@ -92,12 +91,10 @@
       </div>
     </section>
 
-    <!-- ===== Showcase (nueva sección) ===== -->
+    <!-- ===== Showcase ===== -->
     <section class="section-showcase" id="showcase" aria-label="Wave showcase">
-      <!-- Borde con los 13 círculos (solo mitad superior visible) -->
       <div class="seam" aria-hidden="true">
         <div class="l-circles">
-          <!-- 13 círculos exactos -->
           <div class="dot"></div>
           <div class="dot"></div>
           <div class="dot"></div>
@@ -114,26 +111,22 @@
         </div>
       </div>
 
-      <!-- Cuerpo negro de la sección (contenido lo agregamos luego) -->
       <div class="section-showcase__body" aria-hidden="false">
         <h2
           class="showcase-title mwg_landing1"
           aria-label="Craft striking visuals with GSAP"
         >
-          Crafting Visual Excellence<br />
-          Through Data
+          Crafting Visual Excellence<br />Through Data
         </h2>
-        <!-- --------------------- ALLWAKE METRICS CAROUSEL --------------------- -->
+
+        <!-- Metrics -->
         <div class="allwake-metrics">
           <div class="metrics-container">
-            <div class="metrics-track" id="metricsTrack">
-              <!-- Las cards se generarán dinámicamente con JS -->
-            </div>
+            <div class="metrics-track" id="metricsTrack"></div>
           </div>
         </div>
-        <!-- ================= ALLWAKE WORD SCROLL ================= -->
-        <!-- Dentro de .section-showcase__body -->
-        <!-- AQUI -->
+
+        <!-- Scroll lines -->
         <div
           class="scroll-lines"
           id="scrollLines"
@@ -148,7 +141,37 @@
       </div>
     </section>
 
-    <!-- ===== Marquee / Scrolling headline ===== -->
+    <!-- ===== Rays Section ===== -->
+    <section class="rays" id="rays" aria-label="Allwake rays section">
+      <img
+        src="/src/assets/rays-allwake.svg"
+        alt=""
+        class="rays__bg"
+        aria-hidden="true"
+      />
+
+      <img
+        src="/src/assets/coins-nobg.png"
+        alt=""
+        class="rays__coins"
+        aria-hidden="true"
+      />
+
+      <div class="rays__container">
+        <h1 class="rays__headline" data-split-words>
+          Rays ignite imagination—where light meets design
+        </h1>
+      </div>
+
+      <img
+        src="/src/assets/allwake-sticker.svg"
+        alt=""
+        class="rays__sticker"
+        aria-hidden="true"
+      />
+    </section>
+
+    <!-- ===== Marquee ===== -->
     <section class="marquee" aria-label="scrolling headline">
       <div class="blur-sentence">
         <div class="blur-sentence__sentence">

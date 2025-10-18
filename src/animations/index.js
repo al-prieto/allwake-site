@@ -7,6 +7,7 @@ import initIcebergMarquee from './marquee.js';
 import { initShowcase } from './showcase.js';
 import { initAllwakeCarousel } from './allwake-carousel.js';
 import { initScrollLines } from './scrollLines.js';
+import { initRays } from './rays.js';
 
 export function initAnimations() {
   heroAnimation();
@@ -17,4 +18,5 @@ export function initAnimations() {
   initShowcase();
   initAllwakeCarousel();
   initScrollLines();
+  initRays();
 }

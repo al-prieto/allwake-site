@@ -1,0 +1,109 @@
+/* ===================== RAYS SECTION ===================== */
+.rays {
+  --section-min-height: 100vh;
+  --section-gap: 6vw;
+  --section-padding-y: 8vh;
+  --section-padding-x: 6vw;
+
+  --bg-top: -8vh;
+  --bg-right: -10vw;
+  --bg-width: min(78vw, 1200px);
+  --bg-rotation: -3deg;
+
+  --coins-top: 56%;
+  --coins-right: 22vw;
+  --coins-width: clamp(180px, 20vw, 450px);
+  --coins-rotation: 0deg;
+  --coins-translate-y: -50%;
+
+  --sticker-offset: -25vh;
+  --sticker-right: 53vw;
+  --sticker-width: clamp(120px, 14vw, 400px);
+
+  position: relative;
+  min-height: var(--section-min-height);
+  display: grid;
+  grid-template-columns: minmax(280px, 720px) 1fr;
+  gap: var(--section-gap);
+  align-items: center;
+  padding: var(--section-padding-y) var(--section-padding-x);
+  overflow: hidden;
+  background: var(--clr-bg-dark);
+  color: var(--clr-text-light);
+}
+
+.rays__container {
+  position: relative;
+  z-index: 2;
+  top: 20%;
+}
+
+.rays__headline {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: clamp(28px, 4.6vw, 64px);
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+}
+.rays__headline .word {
+  display: inline-block;
+  margin-right: 0.14em;
+  white-space: normal;
+}
+
+/* Layers */
+.rays__bg {
+  position: absolute;
+  top: 0;
+  left: auto;
+  right: 16px;
+  width: min(55vw, 950px);
+  height: auto;
+  z-index: 1;
+  opacity: 0;
+  transform: rotate(var(--bg-rotation));
+  pointer-events: none;
+  object-fit: contain;
+}
+
+.rays__coins {
+  position: absolute;
+  top: var(--coins-top);
+  right: var(--coins-right);
+  width: var(--coins-width);
+  height: auto;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(var(--coins-translate-y)) rotate(var(--coins-rotation));
+  pointer-events: none;
+}
+
+.rays__sticker {
+  position: absolute;
+  top: calc(75% + var(--sticker-offset));
+  right: var(--sticker-right);
+  width: var(--sticker-width);
+  height: auto;
+  z-index: 3;
+  transform-origin: 50% 60%;
+  rotate: 0deg;
+}
+
+/* Responsive (solo mobile por ahora) */
+@media (max-width: 900px) {
+  .rays {
+    grid-template-columns: 1fr;
+    gap: 4vh;
+    padding-top: 12vh;
+    min-height: 140vh;
+  }
+
+  .rays__container {
+    max-width: 48ch;
+  }
+
+  .rays {
+    --coins-width: clamp(140px, 28vw, 300px);
+    --coins-right: 15vw;
+  }
+}
