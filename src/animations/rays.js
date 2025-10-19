@@ -19,9 +19,9 @@ export function initRays() {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: section,
-      start: 'top 60%',
-      end: 'top 20%',
-      scrub: 1,
+      start: 'top 80%',
+      end: 'bottom 90%',
+      scrub: 0.8,
       markers: false,
     },
   });
@@ -34,8 +34,9 @@ export function initRays() {
       duration: 0.8,
       stagger: 0.05,
       ease: 'expo.out',
+      delay: 0.6,
     },
-    0.2
+    0.6
   );
 
   tl.from(
