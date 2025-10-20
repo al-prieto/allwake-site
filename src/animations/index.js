@@ -8,6 +8,7 @@ import { initShowcase } from './showcase.js';
 import { initAllwakeCarousel } from './allwake-carousel.js';
 import { initScrollLines } from './scrollLines.js';
 import { initRays } from './rays.js';
+import { initFooter } from './footer.js';
 
 export function initAnimations() {
   heroAnimation();
@@ -19,4 +20,5 @@ export function initAnimations() {
   initAllwakeCarousel();
   initScrollLines();
   initRays();
+  initFooter();
 }
