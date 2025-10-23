@@ -56,8 +56,90 @@
         <div class="logo">
           <img src="/alwake-logo2.svg" alt="Allwake Studio logo" />
         </div>
-        <div class="menu"><p>Menu</p></div>
+        <div class="menu">
+          <p class="menu-toggle">Menu</p>
+          <!-- <-- trigger -->
+        </div>
       </nav>
+      <div class="aw-menu container" aria-hidden="true">
+        <div class="menu-container">
+          <div class="menu">
+            <div class="menu-main">
+              <div class="menu-top">
+                <div class="menu-top-title">
+                  <p>discover</p>
+                </div>
+                <div class="menu-top-content">
+                  <div class="menu-item">
+                    <div class="menu-item-link">
+                      <div class="bg-hover"></div>
+                      <a href="#home">story</a>
+                    </div>
+                    <span>page 001</span>
+                  </div>
+                  <div class="menu-item">
+                    <div class="menu-item-link">
+                      <div class="bg-hover"></div>
+                      <a href="#vision">protocol</a>
+                    </div>
+                    <span>20 ideas</span>
+                  </div>
+                  <div class="menu-item">
+                    <div class="menu-item-link">
+                      <div class="bg-hover"></div>
+                      <a href="#showcase">journal</a>
+                    </div>
+                    <span>10 notes</span>
+                  </div>
+                  <div class="menu-item">
+                    <div class="menu-item-link">
+                      <div class="bg-hover"></div>
+                      <a href="#contact">contact</a>
+                    </div>
+                    <span>email now</span>
+                  </div>
+                  <div class="menu-item">
+                    <div class="menu-item-link">
+                      <div class="bg-hover"></div>
+                      <a href="#gallery">gallery</a>
+                    </div>
+                    <span>check out</span>
+                  </div>
+                  <div class="menu-item">
+                    <div class="menu-item-link">
+                      <div class="bg-hover"></div>
+                      <a href="#about">about</a>
+                    </div>
+                    <span>our office</span>
+                  </div>
+                </div>
+              </div>
+              <div class="menu-bottom">
+                <div class="menu-sub-item">
+                  <div class="menu-title"><p>connect</p></div>
+                  <div class="menu-content"><p>Discord</p></div>
+                </div>
+                <div class="menu-sub-item">
+                  <div class="menu-title"><p>buy on</p></div>
+                  <div class="menu-content"><p>Opensea</p></div>
+                </div>
+                <div class="menu-sub-item">
+                  <div class="menu-title"><p>us-en</p></div>
+                  <div class="menu-content"><p>2025</p></div>
+                </div>
+              </div>
+            </div>
+            <div class="menu-sidebar">
+              <div class="close-btn" role="button" aria-label="close menu">
+                <ion-icon name="close-sharp"></ion-icon>
+              </div>
+              <div class="logo">
+                <ion-icon name="funnel-sharp"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="hero-copy">
         <div class="copy-left">
@@ -207,5 +289,14 @@
 
     <!-- Entry point -->
     <script type="module" src="/src/main.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js"></script>
   </body>
 </html>

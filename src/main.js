@@ -15,7 +15,6 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 
 import { initAnimations } from './animations/index.js';
-import { initRays } from './animations/rays.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
