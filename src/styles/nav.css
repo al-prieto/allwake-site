@@ -1,0 +1,32 @@
+/* src/styles/nav.css */
+@import './tokens.css';
+
+/* --------------------- NAVIGATION --------------------- */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  padding: 2em;
+}
+
+nav > div {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--clr-text-light);
+  text-transform: uppercase;
+}
+
+.logo img {
+  height: 2.8rem;
+  margin-top: -0.8rem;
+}
+
+.menu {
+  font-family: var(--font-body);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-align: right;
+}

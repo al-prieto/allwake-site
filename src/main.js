@@ -8,6 +8,7 @@ import './styles/allwake-carousel.css';
 import './styles/scroll-lines.css';
 import './styles/rays.css';
 import './styles/footer.css';
+import './styles/nav.css';
 
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';

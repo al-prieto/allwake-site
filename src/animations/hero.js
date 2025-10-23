@@ -12,9 +12,18 @@ import img6 from '@/assets/img6.jpg';
 import img7 from '@/assets/img7.jpg';
 
 export default function heroAnimation() {
+  // =========================
   // Inyectar imágenes del hero
+  // =========================
   const pics = [img1, img2, img3, img4, img5, img6, img7];
   const hero = document.querySelector('.hero-imgs');
+
+  // Bloquear scroll (vertical + horizontal) mientras corre la intro
+  if (!document.documentElement.classList.contains('is-loading')) {
+    document.documentElement.classList.add('is-loading');
+    document.body.classList.add('is-loading');
+  }
+
   if (hero && pics.length) {
     pics.forEach((src) => {
       const el = document.createElement('img');
@@ -23,15 +32,16 @@ export default function heroAnimation() {
     });
   }
 
-  // Animación nav inicial
-  gsap.set('nav', { y: -150 });
-
+  // =========================
   // Contadores
+  // =========================
   const digit1 = document.querySelector('.digit-1');
   const digit2 = document.querySelector('.digit-2');
   const digit3 = document.querySelector('.digit-3');
 
-  // Utilidad: dividir texto en spans
+  // ============================================
+  // Utilidad: dividir texto en spans (por letra)
+  // ============================================
   function splitTextIntoSpans(selector) {
     const element = document.querySelector(selector);
     if (!element) return;
@@ -43,10 +53,14 @@ export default function heroAnimation() {
     element.innerHTML = splitText;
   }
 
+  // =========================
   // H1 del hero
+  // =========================
   splitTextIntoSpans('.copy-left h1');
 
-  // Generar dígitos para tercer contador
+  // ============================================
+  // Generar dígitos para tercer contador (00–100)
+  // ============================================
   if (digit3) {
     for (let i = 0; i < 2; i++) {
       for (let j = 0; j < 10; j++) {
@@ -62,7 +76,9 @@ export default function heroAnimation() {
     digit3.appendChild(finalDigit);
   }
 
+  // =========================
   // Animar contadores
+  // =========================
   function animate(digit, duration, delay = 1) {
     if (!digit) return;
     const first = digit.querySelector('.num');
@@ -81,15 +97,15 @@ export default function heroAnimation() {
   animate(digit2, 6);
   animate(digit1, 2, 5);
 
+  // =========================
   // Barra de progreso
+  // =========================
   gsap.to('.progress-bar', {
     width: '30%',
     duration: 2,
     ease: 'power4.inOut',
     delay: 7,
   });
-  // Al cargar la página, bloquea scroll vertical
-  gsap.set(['html', 'body'], { overflowY: 'hidden', overflowX: 'hidden' });
 
   gsap.to('.progress-bar', {
     width: '100%',
@@ -98,21 +114,38 @@ export default function heroAnimation() {
     delay: 8.5,
     ease: 'power3.out',
     onComplete: () => {
+      // Dentro del onComplete del preloader (donde quitas is-loading)
+      const normalize = () =>
+        gsap.set('.hero-imgs', {
+          scale: 1,
+          transformOrigin: '50% 50%',
+          willChange: 'transform',
+        });
+      window.addEventListener(
+        'resize',
+        () => {
+          // micro-debounce
+          clearTimeout(window.__aw_resize_t);
+          window.__aw_resize_t = setTimeout(normalize, 120);
+        },
+        { passive: true, once: true }
+      );
+
+      // Ocultar preloader y liberar scroll
       gsap.set('.pre-loader', { display: 'none' });
 
-      // ✅ Re-habilita scroll vertical
-      gsap.set(['html', 'body'], {
-        overflowY: 'auto',
-        overflowX: 'hidden',
-        height: 'auto',
-      });
+      document.documentElement.classList.remove('is-loading');
+      document.body.classList.remove('is-loading');
 
-      // Garantiza que arranque desde arriba
+      // Refrescar medidas por si el layout cambió y asegurar posición inicial
+      ScrollTrigger.refresh();
       window.scrollTo(0, 0);
     },
   });
 
-  // Revelar imágenes
+  // =========================
+  // Revelar imágenes del hero
+  // =========================
   gsap.to('.hero-imgs > img', {
     clipPath: 'polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%)',
     duration: 1,
@@ -120,46 +153,22 @@ export default function heroAnimation() {
     stagger: 0.25,
     delay: 9,
   });
-  // 🔍 AGREGAR AQUÍ:
-  gsap.delayedCall(9, () => {
-    console.log(
-      '🔍 Delay 9 - ¿Hay scroll horizontal?',
-      document.body.scrollWidth > document.body.clientWidth
-    );
-  });
 
+  // =========================
   // Zoom del hero
-  gsap.to('.hero', {
+  // =========================
+  // Zoom del layer de imágenes (más estable en resize)
+  gsap.set('.hero-imgs', { scale: 1, transformOrigin: '50% 50%' });
+  gsap.to('.hero-imgs', {
     scale: 1.3,
     duration: 3,
     ease: 'power3.inOut',
     delay: 9,
   });
 
-  gsap.delayedCall(10, () => {
-    console.log(
-      '🔍 Delay 10 - ¿Hay scroll horizontal?',
-      document.body.scrollWidth > document.body.clientWidth
-    );
-  });
-
-  // Aparece el nav
-  gsap.to('nav', {
-    y: 0,
-    duration: 1,
-    ease: 'power3.out',
-    delay: 11,
-  });
-
-  // 🔍 AGREGAR AQUÍ:
-  gsap.delayedCall(11, () => {
-    console.log(
-      '🔍 Delay 11 - ¿Hay scroll horizontal?',
-      document.body.scrollWidth > document.body.clientWidth
-    );
-  });
-
+  // =========================
   // Animación por letra del H1
+  // =========================
   gsap.to('.copy-left h1 span', {
     top: '0px',
     stagger: 0.1,
@@ -168,7 +177,9 @@ export default function heroAnimation() {
     delay: 11,
   });
 
+  // =========================
   // Reveal de copy y botón
+  // =========================
   gsap
     .timeline({ delay: 11 })
     .to('.copy-left h1', { y: 0, opacity: 1, duration: 1, ease: 'power3.out' })
@@ -177,6 +188,6 @@ export default function heroAnimation() {
       '.btn-primary',
       { y: 0, opacity: 1, transform: 'skew(-21deg)', duration: 1 },
       '-=0.8'
-    )
-    .set('html, body', { overflowY: 'visible', overflowX: 'hidden' }, '+=0.5');
+    );
+  // Nota: la línea que reactivaba overflow en html/body se elimina para evitar reactivar scroll antes de tiempo.
 }
