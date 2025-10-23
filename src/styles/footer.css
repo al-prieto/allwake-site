@@ -130,3 +130,39 @@
     justify-content: center;
   }
 }
+
+/* --- ALLWAKE + textura con scroll --- */
+.aw-footer__logo {
+  position: relative; /* necesario para recorte y posicionamiento */
+  isolation: isolate; /* el blend se limita al bloque */
+  overflow: hidden; /* recorta la textura */
+  background: var(--clr-bg-dark);
+}
+
+.aw-footer__logo span {
+  position: relative;
+  z-index: 2; /* el texto queda por encima del fondo */
+}
+
+/* Capa de textura por encima del texto: oscurece solo las letras blancas */
+.aw-footer__texture {
+  position: absolute;
+  inset: 0;
+  z-index: 3; /* por encima del texto */
+  pointer-events: none;
+  mix-blend-mode: multiply; /* clave para “salpicar” las letras */
+  opacity: 0.9; /* ajusta 0.7–1 según gusto */
+  will-change: transform;
+}
+
+/* Tamaño de la textura (nitidez > cobertura). Tú habías preferido 80/80. */
+.aw-footer__texture img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80vw; /* ↑ bájalo/sube si necesitas */
+  height: 80vh;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  display: block;
+}
