@@ -157,4 +157,34 @@ export default function navAnimation() {
       char.dataset.animating = '0';
     });
   }
+
+  // =========================
+  // Smooth scroll para anclas
+  // =========================
+  document.querySelectorAll('.menu-item-link a').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#')) return; // 🔸 solo procesa anclas
+      const target = document.querySelector(href);
+      if (!target) return;
+
+      e.preventDefault();
+
+      // Cierra el menú antes del scroll
+      menuContainer.style.left = '-100%';
+
+      // 🔸 compensa la altura del nav fijo (y agrega un pequeño margen)
+      const navEl = document.querySelector('nav');
+      const offset = (navEl?.getBoundingClientRect().height || 0) + 16;
+
+      // 🔸 calcula posición absoluta del target y descuéntale el offset del nav
+      const y =
+        target.getBoundingClientRect().top + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth',
+      });
+    });
+  });
 }

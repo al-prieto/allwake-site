@@ -325,3 +325,41 @@ nav .menu-toggle {
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
+/* === LinkedIn debe verse EXACTO a .menu-content p === */
+.aw-menu .menu-content p a {
+  all: unset; /* quita color azul, subrayado, visited, etc. */
+  color: inherit; /* hereda el color del p */
+  font: inherit; /* misma tipografía/tamaño */
+  cursor: pointer; /* sigue siendo clickeable */
+  /* display inline por defecto; no lo toques para que el p siga midiendo bien */
+}
+
+/* Accesibilidad: foco visible para teclado (opcional) */
+.aw-menu .menu-content p a:focus-visible {
+  outline: 2px dashed var(--clr-accent);
+  outline-offset: 2px;
+}
+
+/* ================================
+   Logo responsive (clamp + tweaks)
+   ================================ */
+nav .logo img {
+  height: clamp(1.4rem, 4vw, 2.8rem); /* 🔸 escala fluida */
+  margin-top: clamp(-0.4rem, -1vw, -0.8rem);
+}
+
+/* Reduce padding del nav en breakpoints para dar aire en móvil */
+@media (max-width: 900px) {
+  nav {
+    padding: 1.25em 1.5em; /* 🔸 menos padding en tablet/móvil */
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    padding: 1em 1.25em; /* 🔸 aún más compacto en móvil pequeño */
+  }
+  nav .menu-toggle {
+    font-size: 0.85rem;
+  } /* 🔸 armoniza con el logo más chico */
+}

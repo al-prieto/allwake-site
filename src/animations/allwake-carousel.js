@@ -31,7 +31,7 @@ const METRICS_DATA = [
       'Expert pixel-level refinement transforming ordinary images into extraordinary visuals.',
     progress: 4,
     background:
-      'https://images.unsplash.com/photo-1596548438137-d51ea5c83ca4?w=800&q=80',
+      'https://images.unsplash.com/photo-1567092553217-d7a11bd23204?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=692',
   },
   {
     value: '4.9',

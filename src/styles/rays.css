@@ -17,7 +17,7 @@
   --coins-translate-y: -50%;
 
   --sticker-offset: -25vh;
-  --sticker-right: 53vw;
+  --sticker-right: 56vw;
   --sticker-width: clamp(120px, 14vw, 400px);
 
   position: relative;

@@ -4,8 +4,8 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const CFG = {
-  start: '33.33% bottom',
-  end: '120% bottom',
+  start: '25% bottom',
+  end: '90% bottom',
   scrub: 1,
   ease: 'power1.inOut',
   each: 0.05,
