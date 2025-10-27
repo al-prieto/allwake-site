@@ -15,10 +15,11 @@ export function initRays() {
   const bg = section.querySelector('.rays__bg');
   const coins = section.querySelector('.rays__coins');
   const sticker = section.querySelector('.rays__sticker');
+  const scene = section.querySelector('.rays__art');
 
   const tl = gsap.timeline({
     scrollTrigger: {
-      trigger: section,
+      trigger: scene,
       start: 'top 80%',
       end: 'bottom 90%',
       scrub: 0.8,
@@ -89,4 +90,9 @@ export function initRays() {
     },
     1.5
   );
+  const mm = gsap.matchMedia();
+  mm.add('(max-width: 900px)', () => {
+    // puedes ajustar easings/durations sólo para mobile si ves necesario
+    // p.ej. tl.timeScale(1.2);
+  });
 }
