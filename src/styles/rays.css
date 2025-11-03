@@ -1,181 +1,144 @@
-/* ===================== RAYS SECTION ===================== */
-
-/* -------- Contenedor principal -------- */
+/* ===================== RAYS (layout simple) ===================== */
 .rays {
+  --text-top: 32vh; /* posición vertical única */
+  --bg-w: 60vw;
+  --bg-right: 0%;
+  --coins-x: 43;
+  --coins-y: 70;
+  --coins-w: 28;
+  --sticker-top: -4.5em;
+  --sticker-right: 12em;
+
   position: relative;
   isolation: isolate;
-  min-height: 86vh;
-  padding-inline: 6vw;
+  min-height: 100vh;
+  padding: 8vh 6vw;
   background: var(--clr-bg-dark);
   color: var(--clr-text-light);
-  overflow: hidden;
+  overflow: visible;
 }
 
-/* -------- Arte al fondo (como background) -------- */
-.rays__art {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* Rayos */
-.rays__bg {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 55vw;
-  height: auto;
-  opacity: 0;
-}
-
-/* Monedas */
-.rays__coins {
-  position: absolute;
-  right: 22%;
-  top: 42%;
-  width: clamp(160px, 18vw, 420px);
-  height: auto;
-  opacity: 0;
-}
-
-/* -------- Contenido de texto -------- */
+/* ===== Texto ===== */
 .rays__content {
   position: relative;
-  z-index: 1;
-  width: 50vw;
-  top: 40vh;
+  z-index: 10;
+  width: 50vw; /* ✅ fijo y coherente en todas las pantallas grandes */
+  top: var(--text-top);
 }
 
 .rays__headline {
   font-family: var(--font-body);
   font-weight: 800;
-  font-size: clamp(28px, 4.8vw, 66px);
+  font-size: clamp(32px, 3.8vw, 58px);
   line-height: 1.06;
   letter-spacing: -0.01em;
   margin: 0;
+  text-wrap: balance;
 }
 
-.rays__headline .word {
-  display: inline-block;
-  margin-right: 0.14em;
-}
-
-/* -------- Wrapper para sticker -------- */
-.rays__headline-wrap {
+/* Sticker */
+.word-with-sticker {
   position: relative;
   display: inline-block;
+  z-index: 11;
 }
-
 .rays__sticker {
   position: absolute;
-  width: 12vw;
-  top: -0.02em;
-  right: 13.7em;
-  transform-origin: center;
+  width: clamp(80px, 13vw, 200px);
+  top: var(--sticker-top);
+  right: var(--sticker-right);
   pointer-events: none;
 }
 
-/* -------- Spacer -------- */
+/* ===== Arte (rays + coins) ===== */
+.rays__art {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+}
+.rays__artBox {
+  position: absolute;
+  top: 0;
+  right: var(--bg-right);
+  width: var(--bg-w);
+  aspect-ratio: 1200 / 700;
+}
+.rays__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 1;
+}
+.rays__coins {
+  position: absolute;
+  left: calc(var(--coins-x) * 1%);
+  top: calc(var(--coins-y) * 1%);
+  transform: translate(-50%, -50%);
+  width: calc(var(--coins-w) * 1%);
+  height: auto;
+}
+
+/* ===== Spacer ===== */
 .section-spacer {
   height: clamp(8vh, 10vh + 1vw, 16vh);
   background: var(--clr-bg-dark);
 }
 
-/* ===================== RESPONSIVE ===================== */
+/* ===================== BREAKPOINTS (3) ===================== */
 
-/* Pantallas medianas - 1400px */
-@media (max-width: 1400px) {
-  .rays__bg {
-    right: 0;
-    top: 0;
-    width: 55vw;
-  }
-
-  .rays__coins {
-    right: 22%;
-    top: 42%;
-    width: clamp(160px, 18vw, 420px);
-  }
-}
-
-/* Laptops/tablets - 1200px */
-@media (max-width: 1200px) {
-  .rays {
-    min-height: 78vh;
-    padding: 8vh 5vw;
-  }
-
-  .rays__bg {
-    right: -12%;
-    top: -10%;
-    width: min(120vw, 1500px);
-  }
-
-  .rays__coins {
-    right: 14%;
-    top: 58%;
-    width: clamp(140px, 22vw, 360px);
-  }
-
-  .rays__content {
-    width: min(70ch, 74%);
-  }
-
-  .rays__sticker {
-    top: -0.5em;
-    right: -0.7em;
-    width: clamp(56px, 10vw, 110px);
-  }
-}
-
-/* Tablets pequeñas - 1000px */
-/* Agrega DESPUÉS del 1200px y ANTES del 900px */
-@media (max-width: 1000px) {
-  .rays__bg {
-    right: -12%;
-    top: -10%;
-    width: min(120vw, 1500px);
-  }
-
-  .rays__coins {
-    right: 14%;
-    top: 58%;
-    width: clamp(140px, 22vw, 360px);
-  }
-}
-
-/* Móvil - 900px */
+/* Tablet <=900px */
 @media (max-width: 900px) {
-  .rays {
-    min-height: auto;
-    padding: 12vh 6vw 10vh;
-  }
-
   .rays__bg {
-    right: -18%;
-    top: -6%;
-    width: 160vw;
-    opacity: 0.9;
+    display: none; /* ✅ oculta los rayos */
   }
 
-  .rays__coins {
-    right: 8%;
-    top: 62%;
-    width: clamp(130px, 36vw, 300px);
+  .rays {
+    --bg-w: 70vw;
+    --bg-right: -10%;
+    --coins-x: 44;
+    --coins-y: 68;
+    --coins-w: 32;
+    --sticker-top: -0.5em;
+    --sticker-right: -1.25em;
   }
 
   .rays__content {
-    width: 100%;
-    max-width: 58ch;
-  }
-
-  .rays__sticker {
-    top: -0.4em;
-    right: -0.5em;
-    width: clamp(48px, 14vw, 96px);
+    width: 50vw; /* ✅ igual en tablet */
   }
 }
 
+/* Mobile <=600px */
 @media (max-width: 600px) {
+  .rays__bg {
+    display: none; /* ✅ oculta rayos también en mobile */
+  }
+
+  .rays {
+    --bg-w: 100vw;
+    --bg-right: 0%;
+    --coins-x: 75;
+    --coins-y: 95;
+    --coins-w: 24;
+    --sticker-top: 0.25em;
+    --sticker-right: -0.75em;
+    padding-inline: 0;
+    --sticker-top: 0.5em; /* + abajo / - arriba */
+    --sticker-right: -1em; /* - hacia afuera / + hacia adentro */
+  }
+
+  .rays__content {
+    width: 100%; /* ✅ ocupa todo el ancho */
+    max-width: none;
+    box-sizing: border-box;
+    padding-inline: 16px; /* respirito lateral */
+  }
+  .rays__art {
+    z-index: 20; /* > que .rays__content (10) */
+  }
+  .rays__coins {
+    z-index: 21; /* por si el sticker está encima; opcional */
+  }
 }

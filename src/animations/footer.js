@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import textureUrl from '../assets/texture-footer-iceberg_2.png';
+import textureUrl from '../assets/texture-footer-allwake.svg';
 
 gsap.registerPlugin(ScrollTrigger);
 

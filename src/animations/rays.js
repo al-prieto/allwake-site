@@ -60,6 +60,7 @@ export function initRays() {
       scale: 1,
       duration: 0.5,
       ease: 'power2.out',
+      delay: 0.4,
     },
     0.8
   );
@@ -73,6 +74,7 @@ export function initRays() {
       rotation: gsap.utils.random(-15, 15),
       duration: 0.6,
       ease: 'elastic.out(1, 0.7)',
+      delay: 0.4,
     },
     1.05
   );
@@ -83,10 +85,11 @@ export function initRays() {
     {
       scale: 0,
       rotation: gsap.utils.random(-45, 45),
-      xPercent: gsap.utils.random(-30, 30),
-      yPercent: gsap.utils.random(-30, 30),
+      // xPercent: gsap.utils.random(-30, 30),
+      // yPercent: gsap.utils.random(-30, 30),
       duration: 0.6,
       ease: 'elastic.out(1, 0.75)',
+      delay: 0.4,
     },
     1.5
   );

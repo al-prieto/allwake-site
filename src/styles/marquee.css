@@ -106,3 +106,16 @@
     text-shadow: none;
   }
 }
+
+@media (max-width: 900px) {
+  .marquee {
+    --marquee-h: clamp(20rem, 60vh, 40rem);
+  }
+}
+
+/* Mobile <= 600px */
+@media (max-width: 600px) {
+  .marquee {
+    --marquee-h: clamp(14rem, 45vh, 30rem);
+  }
+}

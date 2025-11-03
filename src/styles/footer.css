@@ -150,8 +150,8 @@
   inset: 0;
   z-index: 3; /* por encima del texto */
   pointer-events: none;
-  mix-blend-mode: multiply; /* clave para “salpicar” las letras */
-  opacity: 0.9; /* ajusta 0.7–1 según gusto */
+  mix-blend-mode: normal; /* clave para “salpicar” las letras */
+  opacity: 1; /* ajusta 0.7–1 según gusto */
   will-change: transform;
 }
 
