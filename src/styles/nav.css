@@ -1,0 +1,365 @@
+@import './tokens.css';
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between; /* logo izq — "Menu" der */
+  align-items: center;
+  padding: 2em 3em;
+  background: transparent;
+  font-family: var(--font-body);
+}
+
+nav .logo {
+  display: flex;
+  align-items: center;
+}
+
+nav .logo img {
+  height: 2.8rem;
+  margin-top: -0.8rem;
+}
+
+nav .menu {
+  margin-left: auto;
+}
+
+nav .menu-toggle {
+  cursor: pointer;
+  text-transform: uppercase;
+  color: var(--clr-text-light);
+  letter-spacing: 0.05em;
+  font-size: 0.95rem;
+}
+
+/* =========================================================
+   SIDE MENU (SCOPED UNDER .aw-menu)
+   ========================================================= */
+.aw-menu.container {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.aw-menu .menu-container {
+  position: fixed;
+  top: 50%;
+  left: -100%;
+  transform: translateY(-50%);
+  padding: 1.5em;
+  width: min(680px, 45%);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  transition: left 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  pointer-events: auto;
+}
+
+.aw-menu .menu {
+  width: 100%;
+  height: 100%;
+  background: var(--clr-bg-dark);
+  color: var(--clr-text-light);
+  border-radius: 20px;
+  display: flex;
+  overflow: hidden;
+  border: 1px solid var(--clr-border-subtle);
+}
+
+.aw-menu .menu-main {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid
+    color-mix(in srgb, var(--clr-text-light) 12.5%, transparent);
+}
+
+.aw-menu .menu-sidebar {
+  flex: 0.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.aw-menu .menu-main .menu-top {
+  display: flex;
+  border-top: 1px solid
+    color-mix(in srgb, var(--clr-text-light) 12.5%, transparent);
+}
+
+.aw-menu .menu-main .menu-bottom {
+  display: flex;
+  flex-direction: column;
+}
+
+.aw-menu .menu-top-title {
+  flex: 1;
+  padding: 2em;
+  font-family: var(--font-display);
+  letter-spacing: 0.06em;
+}
+
+.aw-menu .menu-top-content {
+  padding: 1.25em 0;
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+}
+
+.aw-menu .menu-item {
+  position: relative;
+  left: -100px;
+  padding: 0.5em 0;
+  transition: left 0.3s;
+}
+
+.aw-menu .menu-item-link {
+  position: relative;
+}
+
+.aw-menu .menu-item-link a {
+  position: relative;
+  text-decoration: none;
+  color: var(--clr-text-light);
+  font-size: clamp(26px, 6vw, 48px);
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+  font-weight: 400;
+  padding-left: 10px;
+  z-index: 2;
+  text-transform: uppercase;
+}
+
+.aw-menu .menu-item#active .menu-item-link a {
+  color: var(--clr-bg-dark);
+}
+
+.aw-menu .menu-item:hover .menu-item-link a {
+  color: var(--clr-bg-dark);
+}
+
+.aw-menu .bg-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--clr-accent);
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 95% 100%, 0 100%, 0% 50%);
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.aw-menu .menu-item:hover .bg-hover,
+.aw-menu .menu-item#active .bg-hover {
+  opacity: 1;
+}
+
+.aw-menu .menu-item span {
+  position: absolute;
+  top: 0;
+  padding: 1.5em 0;
+}
+
+.aw-menu .menu-item span .word .char {
+  color: var(--clr-bg-dark);
+}
+
+.aw-menu .menu-item#active span .word .char {
+  color: var(--clr-text-light);
+}
+
+.aw-menu .menu-item:hover span .word .char.char-active {
+  color: var(--clr-text-light);
+}
+
+.aw-menu .menu-item span .word .char.char-active {
+  color: var(--clr-bg-dark);
+}
+
+.aw-menu .menu-sub-item {
+  width: 100%;
+  display: flex;
+  gap: 1em;
+  border-top: 1px solid
+    color-mix(in srgb, var(--clr-text-light) 12.5%, transparent);
+  padding: 1em 2em;
+}
+
+.aw-menu .menu-title {
+  flex: 1;
+  text-transform: uppercase;
+  font-family: var(--font-display);
+  letter-spacing: 0.06em;
+}
+
+.aw-menu .menu-content {
+  flex: 4;
+  padding-left: 2em;
+}
+
+.aw-menu .menu-content p {
+  position: relative;
+  width: max-content;
+  padding: 0.125em;
+}
+
+.aw-menu .menu-content p::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: var(--clr-text-light);
+  mix-blend-mode: difference;
+}
+
+@keyframes hoverEffect {
+  0%,
+  100% {
+    width: 0%;
+    left: 0;
+  }
+  50% {
+    width: 100%;
+    left: 0;
+  }
+  51% {
+    left: auto;
+    right: 0;
+    width: 100%;
+  }
+  100% {
+    left: auto;
+    right: 0;
+    width: 0%;
+  }
+}
+
+.aw-menu .menu-content p:hover::after {
+  animation: hoverEffect 1s ease forwards;
+}
+
+.aw-menu .close-btn,
+.aw-menu .menu .logo {
+  padding: 1.5em;
+}
+
+.aw-menu .close-btn {
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--clr-text-light) 12.5%, transparent);
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .aw-menu .menu-container {
+    width: 100%;
+  }
+
+  .aw-menu .menu-top-content {
+    padding: 1.5em;
+  }
+
+  .aw-menu .menu-top-title,
+  .aw-menu .menu-item span,
+  .aw-menu .menu-title,
+  .aw-menu .bg-hover {
+    display: none;
+  }
+
+  .aw-menu .menu-item:hover .menu-item-link a,
+  .aw-menu .menu-item#active .menu-item-link a {
+    color: var(--clr-text-light);
+  }
+
+  .aw-menu .menu-sub-item {
+    padding: 1em 0;
+  }
+}
+
+/* Oculta el nav durante el preloader */
+html.is-loading nav {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Estado normal (visible) una vez termina la intro */
+nav {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Tipografías del panel lateral */
+.aw-menu .menu-item-link a {
+  font-family: var(--font-display); /* títulos grandes: Bebas */
+}
+
+/* Subtítulos, etiquetas y meta-info: Inter Variable */
+.aw-menu .menu-top-title,
+.aw-menu .menu-item span,
+.aw-menu .menu-title p,
+.aw-menu .menu-content p {
+  font-family: var(--font-body);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  text-transform: none; /* o 'uppercase' si prefieres */
+  font-size: 0.9rem; /* ajusta a gusto */
+  opacity: 0.85; /* sutil contraste */
+}
+
+/* El toggle “MENU” del nav también en Inter */
+nav .menu-toggle {
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+/* === LinkedIn debe verse EXACTO a .menu-content p === */
+.aw-menu .menu-content p a {
+  all: unset; /* quita color azul, subrayado, visited, etc. */
+  color: inherit; /* hereda el color del p */
+  font: inherit; /* misma tipografía/tamaño */
+  cursor: pointer; /* sigue siendo clickeable */
+  /* display inline por defecto; no lo toques para que el p siga midiendo bien */
+}
+
+/* Accesibilidad: foco visible para teclado (opcional) */
+.aw-menu .menu-content p a:focus-visible {
+  outline: 2px dashed var(--clr-accent);
+  outline-offset: 2px;
+}
+
+/* ================================
+   Logo responsive (clamp + tweaks)
+   ================================ */
+nav .logo img {
+  height: clamp(1.4rem, 4vw, 2.8rem); /* 🔸 escala fluida */
+  margin-top: clamp(-0.4rem, -1vw, -0.8rem);
+}
+
+/* Reduce padding del nav en breakpoints para dar aire en móvil */
+@media (max-width: 900px) {
+  nav {
+    padding: 1.25em 1.5em; /* 🔸 menos padding en tablet/móvil */
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    padding: 1em 1.25em; /* 🔸 aún más compacto en móvil pequeño */
+  }
+  nav .menu-toggle {
+    font-size: 0.85rem;
+  } /* 🔸 armoniza con el logo más chico */
+}

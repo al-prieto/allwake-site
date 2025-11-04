@@ -1,0 +1,168 @@
+/* ===================== FOOTER ===================== */
+.aw-footer {
+  --bar-h: clamp(44px, 8vh, 72px);
+  --divider: color-mix(in srgb, var(--clr-text-light) 16%, transparent);
+  background: var(--clr-bg-dark);
+  color: var(--clr-text-light);
+  width: 100%;
+  display: grid;
+  gap: 0;
+}
+
+/* Wordmark grande */
+.aw-footer__logo {
+  display: grid;
+  place-items: center;
+  padding: clamp(28px, 8vh, 80px) var(--grid-margin, 6vw);
+  overflow: hidden;
+}
+.aw-footer__logo span {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  /* tamaño responsivo estilo hero */
+  font-size: clamp(72px, 14vw, 520px);
+  text-align: center;
+  /* ligero “tight” look */
+  transform: translateX(-1.5%);
+}
+
+/* Franja con 3 columnas y divisores verticales */
+.aw-footer__bar {
+  height: var(--bar-h);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  border-block-start: 1px solid var(--divider);
+  position: relative;
+}
+
+/* líneas verticales finas a los lados y entre columnas */
+.aw-footer__bar::before,
+.aw-footer__bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--divider);
+}
+.aw-footer__bar::before {
+  left: var(--grid-margin, 6vw);
+}
+.aw-footer__bar::after {
+  right: var(--grid-margin, 6vw);
+}
+.aw-footer__bar > .aw-footer__col:nth-child(2) {
+  position: relative;
+}
+.aw-footer__bar > .aw-footer__col:nth-child(2)::before,
+.aw-footer__bar > .aw-footer__col:nth-child(2)::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  width: 1px;
+  background: var(--divider);
+}
+.aw-footer__bar > .aw-footer__col:nth-child(2)::before {
+  left: 0;
+}
+.aw-footer__bar > .aw-footer__col:nth-child(2)::after {
+  right: 0;
+}
+
+.aw-footer__col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--grid-margin, 6vw);
+  text-align: center;
+}
+.aw-footer__col p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  font-size: clamp(12px, 1.15vw, 14px);
+  white-space: nowrap;
+}
+.aw-footer__col a {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+}
+.aw-footer__col a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 80%;
+  height: 1px;
+  background: var(--clr-text-light);
+  transform: scaleX(0);
+  transform-origin: right top;
+  transition: transform 0.3s ease-in-out;
+}
+.aw-footer__col a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left top;
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .aw-footer__bar {
+    grid-template-columns: 1fr;
+    height: auto;
+    row-gap: 10px;
+    padding: 14px 0;
+  }
+  .aw-footer__bar::before,
+  .aw-footer__bar::after,
+  .aw-footer__bar > .aw-footer__col:nth-child(2)::before,
+  .aw-footer__bar > .aw-footer__col:nth-child(2)::after {
+    display: none;
+  }
+  .aw-footer__col {
+    justify-content: center;
+  }
+}
+
+/* --- ALLWAKE + textura con scroll --- */
+.aw-footer__logo {
+  position: relative; /* necesario para recorte y posicionamiento */
+  isolation: isolate; /* el blend se limita al bloque */
+  overflow: hidden; /* recorta la textura */
+  background: var(--clr-bg-dark);
+}
+
+.aw-footer__logo span {
+  position: relative;
+  z-index: 2; /* el texto queda por encima del fondo */
+}
+
+/* Capa de textura por encima del texto: oscurece solo las letras blancas */
+.aw-footer__texture {
+  position: absolute;
+  inset: 0;
+  z-index: 3; /* por encima del texto */
+  pointer-events: none;
+  mix-blend-mode: normal; /* clave para “salpicar” las letras */
+  opacity: 1; /* ajusta 0.7–1 según gusto */
+  will-change: transform;
+}
+
+/* Tamaño de la textura (nitidez > cobertura). Tú habías preferido 80/80. */
+.aw-footer__texture img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80vw; /* ↑ bájalo/sube si necesitas */
+  height: 80vh;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  display: block;
+}

@@ -1,0 +1,121 @@
+/* ===================== MARQUEE ===================== */
+.marquee {
+  /* Altura del bloque (ajústala libremente) */
+  --marquee-h: clamp(32rem, 75vh, 88rem);
+
+  /* Color del glow del blur (puedes cambiarlo a dark/light si quieres) */
+  --blur-color: var(--clr-accent);
+
+  position: relative;
+  width: 100%;
+  height: var(--marquee-h);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--clr-bg-dark);
+}
+
+/* Soft edge fade */
+.marquee::before,
+.marquee::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(2rem, 6vw, 10rem);
+  pointer-events: none;
+  z-index: 3;
+  background: linear-gradient(to right, var(--clr-bg-dark), transparent);
+}
+.marquee::before {
+  left: 0;
+}
+.marquee::after {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+/* ===================== CONTENT ===================== */
+.blur-sentence {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+}
+
+.blur-sentence__sentence {
+  display: inline-block;
+  will-change: transform;
+  margin: 0;
+  padding: 0;
+  margin-right: clamp(3rem, 5vw, 6rem);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3.5rem, 14.3vw, 275px);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--clr-text-light); /* texto base claro */
+}
+
+/* Letras animadas con blur */
+.blur-sentence__sentence.is-animated .char {
+  position: relative;
+  display: inline-block;
+  animation: iceberg-blur-tight 10s linear infinite;
+  /* relleno visible (claro) + blur del color elegido */
+  color: var(--clr-text-light);
+  text-shadow: 0 0 0 var(--blur-color);
+  --pulse: 0.045;
+  --stagger: 0.16s;
+  animation-delay: calc(var(--i) * var(--stagger) * -1);
+}
+
+/* ===================== KEYFRAMES ===================== */
+/* Usamos var(--blur-color) para controlar el glow */
+@keyframes iceberg-blur-tight {
+  0% {
+    text-shadow: 0 0 0 var(--blur-color);
+  }
+  4% {
+    text-shadow: 0 0 clamp(8px, 2.5vw, 24px) var(--blur-color);
+  }
+  5% {
+    text-shadow: 0 0 clamp(10px, 3vw, 28px) var(--blur-color);
+  }
+  7% {
+    text-shadow: 0 0 clamp(6px, 2vw, 18px) var(--blur-color);
+  }
+  9%,
+  100% {
+    text-shadow: 0 0 0 var(--blur-color);
+  }
+}
+
+/* ===================== ACCESSIBILITY ===================== */
+@media (prefers-reduced-motion: reduce) {
+  .blur-sentence__sentence {
+    transform: none !important;
+  }
+  .blur-sentence__sentence.is-animated .char {
+    animation: none;
+    text-shadow: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .marquee {
+    --marquee-h: clamp(20rem, 60vh, 40rem);
+  }
+}
+
+/* Mobile <= 600px */
+@media (max-width: 600px) {
+  .marquee {
+    --marquee-h: clamp(14rem, 45vh, 30rem);
+  }
+}

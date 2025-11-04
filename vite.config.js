@@ -1,6 +1,12 @@
 import { defineConfig } from 'vite'
+import { fileURLToPath, URL } from 'node:url'
 
-export default defineConfig({
-  // 👇 coloca aquí el nombre EXACTO de tu repo
+
+
+export default defineConfig({ 
   base: '/allwake-site/',
-})
+  resolve:{ alias:{ '@': fileURLToPath(new URL('./src', import.meta.url)) } },
+  alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))  
+    }
+});

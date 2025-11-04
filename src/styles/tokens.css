@@ -1,0 +1,25 @@
+@import '@fontsource-variable/inter/index.css';
+@import '@fontsource/bebas-neue/400.css';
+
+:root {
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Inter Variable', sans-serif;
+
+  /* Neutros */
+  --clr-bg-dark: #1a1a1a;
+  --clr-bg-light: #e1e1e1;
+  --clr-neutral-warm: #ede8d0;
+
+  /* Texto */
+  --clr-text-light: var(--clr-bg-light);
+  --clr-text-dark: var(--clr-bg-dark);
+
+  /* Acentos */
+  --clr-accent: #c9fe6e;
+  --clr-accent-hover: color-mix(in srgb, var(--clr-accent) 80%, black);
+  --clr-border-subtle: color-mix(
+    in srgb,
+    var(--clr-bg-light) 15%,
+    var(--clr-bg-dark)
+  );
+}

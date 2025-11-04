@@ -1,0 +1,312 @@
+/* src/styles/hero.css */
+@import './tokens.css';
+
+/* --------------------- RESET & BASE SETUP --------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: var(--clr-accent);
+}
+
+/* --------------------- HERO CONTAINER --------------------- */
+.hero {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-imgs {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero-imgs > img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
+}
+
+.website-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* --------------------- PRELOADER --------------------- */
+.pre-loader {
+  width: 200%;
+  height: 100%;
+  padding: 2em;
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 0.5em;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.pre-loader p {
+  width: max-content;
+  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 60px;
+  line-height: 60px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.counter {
+  height: 100px;
+  display: flex;
+  font-family: var(--font-display);
+  font-size: 100px;
+  font-weight: 400;
+  line-height: 150px;
+  clip-path: polygon(0 0, 100% 0, 100% 100px, 0 100px);
+}
+
+.digit-1,
+.digit-2,
+.digit-3,
+.digit-4 {
+  position: relative;
+  top: -15px;
+}
+
+.offset {
+  position: relative;
+  right: -7.5px;
+}
+
+.progress-bar {
+  position: relative;
+  top: -15px;
+  width: 0%;
+  height: 4px;
+  background: var(--clr-bg-dark);
+}
+
+.pre-loader .progress-bar {
+  background: var(--clr-bg-dark) !important;
+}
+
+/* --------------------- HERO COPY LAYOUT --------------------- */
+.hero-copy {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 4vw;
+  padding: 0 3rem;
+  padding-left: 2rem;
+  padding-bottom: 4rem;
+  pointer-events: none;
+}
+
+.copy-left h1 {
+  font: 400 5.8vw/0.9 var(--font-display);
+  color: var(--clr-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  transform: translateY(80px);
+}
+
+.copy-right {
+  max-width: 30rem;
+  text-align: left;
+  margin: 0 auto;
+  line-height: 1.1;
+}
+
+.copy-right p {
+  font: 400 1.375rem/1.4 var(--font-body);
+  color: var(--clr-text-light);
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(80px);
+}
+
+/* --------------------- CTA BUTTON --------------------- */
+.btn-primary {
+  background: var(--clr-accent);
+  border: none;
+  padding: 10px 20px;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  width: auto;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  pointer-events: auto;
+  color: var(--clr-text-dark);
+  font-family: var(--font-body);
+  opacity: 0;
+  transform: translateY(80px) skew(-21deg);
+}
+
+.btn-primary span {
+  display: inline-block;
+  transform: skew(21deg);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 100%;
+  left: 0;
+  background: var(--clr-bg-dark);
+  opacity: 0;
+  z-index: -1;
+  transition: all 0.5s;
+}
+
+.btn-primary:hover {
+  color: var(--clr-accent);
+}
+
+.btn-primary:hover::before {
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+/* --------------------- RESPONSIVE DESIGN --------------------- */
+@media (max-width: 900px) {
+  .pre-loader {
+    padding: 1em;
+    gap: 0.5em;
+  }
+
+  .pre-loader p {
+    font-size: 40px;
+    line-height: 64px;
+  }
+
+  .counter {
+    font-size: 70px;
+  }
+
+  .offset {
+    position: relative;
+    right: -5px;
+  }
+}
+
+/* ===== Scroll lock durante la intro ===== */
+html.is-loading,
+body.is-loading {
+  /* bloquea vertical y horizontal */
+  overflow: hidden;
+  /* evita gestos de desplazamiento y “pull-to-refresh” */
+  touch-action: none;
+  overscroll-behavior: none;
+  /* asegura que no se expanda el layout */
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== HERO RESPONSIVE: texto más limpio en pantallas pequeñas ===== */
+@media (max-width: 768px) {
+  /* Oculta el párrafo en móviles */
+  .copy-right p {
+    display: none;
+  }
+
+  /* Ajusta el tamaño y espaciado del H1 */
+  .copy-left h1 {
+    font-size: clamp(26px, 8vw, 56px);
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  /* Reorganiza layout del hero-copy */
+  .hero-copy {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    min-height: 100%;
+    gap: 1rem;
+    padding-bottom: 0 1rem 2rem;
+  }
+
+  /* Compacta el botón */
+  .btn-primary {
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+}
+
+/* Extra: pantallas muy pequeñas (opcional) */
+@media (max-width: 480px) {
+  .copy-left h1 {
+    font-size: clamp(24px, 9vw, 44px);
+  }
+
+  .btn-primary {
+    padding: 7px 14px;
+  }
+}
+
+/* Fix z-index */
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2em 3em;
+  background: transparent;
+  font-family: var(--font-body);
+}
+
+.aw-menu .menu-container {
+  z-index: 110; /* menú > nav */
+}
+
+.pre-loader {
+  z-index: 200;
+}
+
+.section-two,
+.section-showcase,
+.rays,
+.marquee,
+.aw-footer {
+  position: relative;
+  z-index: 0;
+}
+
+.rays__bg,
+.rays__coins,
+.rays__sticker {
+  position: relative;
+  z-index: 1;
+}

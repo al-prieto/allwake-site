@@ -1,0 +1,218 @@
+/* src/styles/allwake-carousel.css */
+
+/* --------------------- ALLWAKE METRICS CAROUSEL --------------------- */
+
+.allwake-metrics {
+  position: relative;
+  background: transparent;
+  overflow: hidden;
+  padding: 10rem 0; /* Reducir padding superior */
+  width: 100%;
+  margin-top: 2rem; /* Reducir margen superior */
+}
+
+.metrics-container {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  overflow: hidden;
+}
+
+.metrics-track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  animation: scroll-infinite 30s linear infinite;
+  width: max-content;
+  will-change: transform;
+}
+
+.metric-card {
+  width: 400px;
+  height: 500px;
+  margin-right: 2rem;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Overlay oscuro como el original */
+.metric-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  z-index: 2;
+}
+
+.metric-content {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  color: var(--clr-text-light);
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 1rem;
+  margin-bottom: auto;
+}
+
+.metric-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-value {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 8vw, 6rem);
+  line-height: 0.85;
+  color: var(--clr-text-light);
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.metric-unit {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  opacity: 0.8;
+  color: var(--clr-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.metric-label {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--clr-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metric-progress {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.progress-bar {
+  width: 12px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.progress-bar.active {
+  background: var(--clr-accent);
+  box-shadow: 0 0 6px rgba(201, 254, 110, 0.4);
+}
+
+.metric-footer {
+  margin-top: auto;
+  padding-top: 1.5rem;
+}
+
+.metric-description {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--clr-text-light);
+  opacity: 0.9;
+}
+
+/* Animación infinita */
+@keyframes scroll-infinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Hover effects */
+.metric-card:hover {
+  transform: scale(1.02);
+  transition: transform 0.4s ease;
+}
+
+.metric-card:hover .metric-value {
+  color: var(--clr-accent);
+  transition: color 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .metric-card {
+    width: 350px;
+    height: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mwg_landing1 {
+    font-size: clamp(2.2rem, 8vw, 5rem);
+    line-height: 1.05;
+  }
+
+  .allwake-metrics {
+    padding: 4rem 0 2rem;
+  }
+
+  .metrics-container {
+    height: 420px;
+  }
+
+  .metric-card {
+    width: 300px;
+    height: 400px;
+    margin-right: 1.5rem;
+  }
+
+  .metric-content {
+    padding: 1.5rem;
+  }
+
+  .metrics-track {
+    animation-duration: 25s;
+  }
+}
+
+@media (max-width: 480px) {
+  .mwg_landing1 {
+    font-size: clamp(1.8rem, 9vw, 4rem);
+    line-height: 1;
+  }
+
+  .metric-card {
+    width: 280px;
+    height: 360px;
+  }
+
+  .metric-content {
+    padding: 1.2rem;
+  }
+
+  .metric-value {
+    font-size: clamp(3rem, 10vw, 4rem);
+  }
+}
+
+/* Polish */

@@ -1,0 +1,112 @@
+/* src/styles/section-showcase.css */
+
+/* --------------------- ROOT VARIABLES --------------------- */
+:root {
+  --d: calc(100vw / 12);
+}
+
+/* --------------------- MAIN SECTION --------------------- */
+.section-showcase {
+  position: relative;
+  color: var(--clr-text-light);
+  /* Exact seam: cream top to half diameter, black bottom */
+  --split: calc(var(--d) / 2);
+  background: linear-gradient(
+    to bottom,
+    var(--clr-neutral-warm) 0 var(--split),
+    var(--clr-bg-dark) var(--split)
+  );
+  isolation: isolate;
+  overflow: visible;
+  z-index: 0;
+}
+
+/* --------------------- SEAM CONTAINER --------------------- */
+.seam {
+  position: relative;
+  height: var(--split);
+  background: transparent;
+  overflow: visible;
+  z-index: 1;
+}
+
+/* --------------------- CIRCLES LAYOUT --------------------- */
+.l-circles {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  margin: 0 0 0 50%;
+  transform: translate(-50%, 0);
+  position: relative;
+  z-index: 2;
+}
+
+.dot {
+  width: 8.3vw;
+  height: 8.3vw;
+  border-radius: 100%;
+  background: var(--clr-bg-dark);
+  will-change: transform;
+  transform: scale(1, 0);
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+/* --------------------- SECTION BODY --------------------- */
+/* ====== Showcase — Title (con tus tokens) ====== */
+.mwg_landing1 {
+  text-align: center;
+  margin: 0; /* quita el 10vh si quieres centrar exacto */
+  padding: 0 2rem;
+
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: var(--clr-text-light);
+  /* tamaño fluido tipo hero */
+  /* font-size: clamp(2.2rem, 8vw, 7.2rem); */
+  font-size: clamp(2.8rem, 7vw, 6.8rem);
+}
+
+/* Split helpers (mantén estos) */
+.mwg_landing1 .word {
+  display: inline-block;
+}
+.mwg_landing1 .letter {
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  margin: -0.28em -0.1em -0.05em;
+  padding: 0 0.1em 0.05em;
+}
+.mwg_landing1 .letter > span {
+  display: inline-block;
+  transform: translateY(102%); /* estado inicial: oculto hacia abajo */
+  will-change: transform;
+}
+
+/* Body de la sección (lo tuyo + nota) */
+.section-showcase__body {
+  min-height: 50vh;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-block: 16rem 4rem; /* si te “baja” demasiado el título, reduce este valor */
+  flex-direction: column;
+}
+
+/* el body de la sección queda por encima de .l-circles (z:2) */
+.section-showcase__body {
+  position: relative;
+  z-index: 3;
+}
+
+/* opcional: refuerzo al propio h2 si lo necesitas */
+.mwg_landing1 {
+  position: relative;
+  z-index: 3;
+}
