@@ -363,3 +363,21 @@ nav .logo img {
     font-size: 0.85rem;
   } /* 🔸 armoniza con el logo más chico */
 }
+
+/* Oculto por defecto para evitar el flash antes de que cargue JS */
+nav {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Visible sólo cuando marcamos que ya terminó la intro */
+html.nav-ready nav {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mientras esté cargando (opcional, mantiene la intención original) */
+html.is-loading nav {
+  opacity: 0;
+  pointer-events: none;
+}

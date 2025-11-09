@@ -137,6 +137,8 @@ export default function heroAnimation() {
       document.documentElement.classList.remove('is-loading');
       document.body.classList.remove('is-loading');
 
+      document.documentElement.classList.add('nav-ready');
+
       // Refrescar medidas por si el layout cambió y asegurar posición inicial
       ScrollTrigger.refresh();
       window.scrollTo(0, 0);
