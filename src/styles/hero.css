@@ -273,7 +273,7 @@ body.is-loading {
 
 /* Fix z-index */
 
-nav {
+/* nav {
   position: fixed;
   top: 0;
   left: 0;
@@ -288,8 +288,8 @@ nav {
 }
 
 .aw-menu .menu-container {
-  z-index: 110; /* menú > nav */
-}
+  z-index: 110; 
+} */
 
 .pre-loader {
   z-index: 200;

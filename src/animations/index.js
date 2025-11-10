@@ -13,7 +13,7 @@ import navAnimation from './nav.js';
 
 export function initAnimations() {
   heroAnimation();
-  initParallax();
+  // initParallax();
   textReveal();
   initMarquee();
   initIcebergMarquee();

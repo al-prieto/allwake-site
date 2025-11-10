@@ -2,6 +2,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
+import { initParallax } from './parallax';
 
 import img1 from '@/assets/img1.jpg';
 import img2 from '@/assets/img2.jpg';
@@ -139,9 +140,13 @@ export default function heroAnimation() {
 
       document.documentElement.classList.add('nav-ready');
 
+      initParallax();
+
       // Refrescar medidas por si el layout cambió y asegurar posición inicial
-      ScrollTrigger.refresh();
-      window.scrollTo(0, 0);
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+        window.scrollTo(0, 0);
+      }, 0);
     },
   });
 
