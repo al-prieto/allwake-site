@@ -216,3 +216,31 @@
 }
 
 /* Polish */
+
+/* 1) En móviles, no apliques efectos :hover (evita reprocesos) */
+@media (hover: hover) and (pointer: fine) {
+  .metric-card:hover {
+    transform: scale(1.02);
+    transition: transform 0.4s ease;
+  }
+  .metric-card:hover .metric-value {
+    color: var(--clr-accent);
+    transition: color 0.3s ease;
+  }
+}
+
+/* 2) Indica que el gesto es vertical: no sequestra la animación */
+.metrics-container {
+  touch-action: pan-y;
+}
+
+/* 3) Fuerza que la animación siga “running” siempre */
+.metrics-track {
+  animation-play-state: running !important;
+}
+
+.metric-card {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}

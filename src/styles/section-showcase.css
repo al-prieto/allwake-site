@@ -110,3 +110,15 @@
   position: relative;
   z-index: 3;
 }
+
+@media (max-width: 768px) {
+  .section-showcase__body {
+    padding-block: 8rem 2rem; /* 🔹 reduce espacio superior e inferior */
+  }
+
+  .mwg_landing1 {
+    padding: 0 1rem; /* 🔹 menos padding lateral */
+    font-size: clamp(2.6rem, 9vw, 5.2rem); /* 🔹 un poco más grande */
+    max-width: 95%; /* 🔹 evita saltos de línea prematuros */
+  }
+}
