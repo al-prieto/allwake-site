@@ -5,126 +5,95 @@ export default function initIcebergMarquee() {
   if (!container) return;
 
   // Respect user motion preferences
-  const prefersReduced = window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches;
-  if (prefersReduced) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  // Split text into characters for ICEBERG-style animation
-  function wrapCharsInSpans(element) {
-    const text = element.textContent;
-    const chars = text
-      .split('')
-      // ⚠️ NUEVO: agregamos un índice --i a cada letra para escalonar con CSS
-      .map((char, i) => {
-        if (char === ' ')
-          return `<span class="char" style="--i:${i}">&nbsp;</span>`;
-        return `<span class="char" style="--i:${i}">${char}</span>`;
-      })
-      .join('');
-    element.innerHTML = chars;
-  }
-
-  // Create seamless repeating content (3 copies for smooth loop)
-  function createSeamlessContent(originalText, repetitions = 3) {
-    const clean = originalText.trim().replace(/\s+/g, ' ');
-    const sep = ' '; // space between repetitions
-    return Array(repetitions).fill(clean).join(sep);
-  }
-
-  // Get the original text before modifying
   const originalSentence = container.querySelector('.blur-sentence__sentence');
   if (!originalSentence) return;
 
-  const baseText = originalSentence.textContent;
-  const seamlessText = createSeamlessContent(baseText, 3);
+  // Split text into characters for ICEBERG-style animation
+  const wrapCharsInSpans = (element) => {
+    const chars = element.textContent
+      .split('')
+      .map(
+        (char, i) =>
+          `<span class="char" style="--i:${i}">${
+            char === ' ' ? '&nbsp;' : char
+          }</span>`
+      );
+    element.innerHTML = chars.join('');
+  };
 
-  // Replace content with seamless version
-  originalSentence.textContent = seamlessText;
+  // Create seamless repeating content (3 copies for smooth loop)
+  const baseText = originalSentence.textContent.trim().replace(/\s+/g, ' ');
+  originalSentence.textContent = Array(3).fill(baseText).join(' ');
   wrapCharsInSpans(originalSentence);
-  // NO agregamos 'is-animated' aquí
 
-  // Activar blur después de X segundos (ajusta este valor)
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      originalSentence.classList.add('is-animated');
-    }, 1500);
-  });
+  // Activar blur después de 1.5s
+  setTimeout(() => originalSentence.classList.add('is-animated'), 1500);
+
+  // Configuración de velocidad según viewport
+  const getLoopDuration = () => {
+    const vw = window.innerWidth;
+    if (vw >= 1440) return 36;
+    if (vw >= 1024) return 32;
+    if (vw >= 768) return 24;
+    return 12;
+  };
 
   let animationId;
-  // const speed = 260; // px/sec
+  let currentX;
 
-  function animate() {
-    const sentence = container.querySelector('.blur-sentence__sentence');
-    if (!sentence) return;
-
+  const animate = () => {
     const containerWidth = container.offsetWidth;
-    const sentenceWidth = sentence.scrollWidth;
-    const oneThirdWidth = sentenceWidth / 3; // ancho de una repetición
+    const sentenceWidth = originalSentence.scrollWidth;
+    const oneThirdWidth = sentenceWidth / 3;
 
     if (!oneThirdWidth || !isFinite(oneThirdWidth)) return;
 
-    // ⏱️ Duración del loop según viewport
-    const vw = window.innerWidth;
-    let loopDuration; // en segundos
+    const speed = oneThirdWidth / getLoopDuration();
+    currentX = containerWidth;
 
-    if (vw >= 1440) {
-      loopDuration = 36; // desktop grande: más lento
-    } else if (vw >= 1024) {
-      loopDuration = 32; // laptop / desktop medio
-    } else if (vw >= 768) {
-      loopDuration = 24; // tablet
-    } else {
-      loopDuration = 16; // mobile más ágil
-    }
+    const tick = () => {
+      currentX -= speed / 60;
 
-    // px/segundo según ancho del texto y duración deseada
-    const speed = oneThirdWidth / loopDuration;
-
-    // Empezamos desde el borde derecho del contenedor
-    let currentX = containerWidth;
-
-    function tick() {
-      currentX -= speed / 60; // 60fps aprox
-
-      // Cuando pasó una repetición completa, reseteamos
       if (currentX <= -oneThirdWidth) {
         currentX += oneThirdWidth;
       }
 
-      sentence.style.transform = `translateX(${currentX}px)`;
+      originalSentence.style.transform = `translateX(${currentX}px)`;
       animationId = requestAnimationFrame(tick);
-    }
+    };
 
     tick();
-  }
+  };
 
-  // Wait for fonts and start animation
-  const fontsReady =
-    (document.fonts && document.fonts.ready) || Promise.resolve();
-  fontsReady
-    .then(() => {
+  // Start animation when fonts are ready
+  const startAnimation = () => {
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(animate).catch(animate);
+    } else {
       animate();
-    })
-    .catch(() => {
-      animate(); // fallback
-    });
+    }
+  };
 
-  // Handle resize
+  startAnimation();
+
+  // Handle resize con debounce optimizado
   let resizeTimeout;
-  window.addEventListener('resize', () => {
+  const handleResize = () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-        animate(); // restart animation with new measurements
-      }
-    }, 100);
-  });
+      cancelAnimationFrame(animationId);
+      animate();
+    }, 150);
+  };
+
+  window.addEventListener('resize', handleResize, { passive: true });
 
   // Cleanup function
   return () => {
-    if (animationId) cancelAnimationFrame(animationId);
+    cancelAnimationFrame(animationId);
     clearTimeout(resizeTimeout);
+    window.removeEventListener('resize', handleResize);
   };
 }
