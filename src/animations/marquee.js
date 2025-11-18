@@ -52,7 +52,7 @@ export default function initIcebergMarquee() {
   });
 
   let animationId;
-  const speed = 260; // px/sec
+  // const speed = 260; // px/sec
 
   function animate() {
     const sentence = container.querySelector('.blur-sentence__sentence');
@@ -60,17 +60,36 @@ export default function initIcebergMarquee() {
 
     const containerWidth = container.offsetWidth;
     const sentenceWidth = sentence.scrollWidth;
-    const oneThirdWidth = sentenceWidth / 3; // width of one repetition
+    const oneThirdWidth = sentenceWidth / 3; // ancho de una repetición
 
-    // Start from right edge, move to left
+    if (!oneThirdWidth || !isFinite(oneThirdWidth)) return;
+
+    // ⏱️ Duración del loop según viewport
+    const vw = window.innerWidth;
+    let loopDuration; // en segundos
+
+    if (vw >= 1440) {
+      loopDuration = 36; // desktop grande: más lento
+    } else if (vw >= 1024) {
+      loopDuration = 32; // laptop / desktop medio
+    } else if (vw >= 768) {
+      loopDuration = 24; // tablet
+    } else {
+      loopDuration = 16; // mobile más ágil
+    }
+
+    // px/segundo según ancho del texto y duración deseada
+    const speed = oneThirdWidth / loopDuration;
+
+    // Empezamos desde el borde derecho del contenedor
     let currentX = containerWidth;
 
     function tick() {
-      currentX -= speed / 60; // 60fps approximation
+      currentX -= speed / 60; // 60fps aprox
 
-      // When one full repetition has passed, reset position
+      // Cuando pasó una repetición completa, reseteamos
       if (currentX <= -oneThirdWidth) {
-        currentX += oneThirdWidth; // jump back by one repetition width
+        currentX += oneThirdWidth;
       }
 
       sentence.style.transform = `translateX(${currentX}px)`;

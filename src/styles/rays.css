@@ -1,17 +1,21 @@
 /* ===================== RAYS (layout simple) ===================== */
 .rays {
-  --text-top: 32vh; /* posición vertical única */
+  /* === POSITION TOKENS (DESKTOP BASE >= 1440px) === */
+  --text-top: 32vh;
   --bg-w: 60vw;
   --bg-right: 0%;
+
+  /* 💰 COINS base desktop */
   --coins-x: 43;
   --coins-y: 70;
   --coins-w: 28;
+
+  /* 🧻 STICKER base desktop */
   --sticker-top: -4.5em;
   --sticker-right: 12em;
 
   position: relative;
   isolation: isolate;
-  min-height: 100vh;
   padding: 8vh 6vw;
   background: var(--clr-bg-dark);
   color: var(--clr-text-light);
@@ -22,8 +26,8 @@
 .rays__content {
   position: relative;
   z-index: 10;
-  width: 50vw; /* ✅ fijo y coherente en todas las pantallas grandes */
-  top: var(--text-top);
+  width: 50vw;
+  top: 0;
 }
 
 .rays__headline {
@@ -87,58 +91,236 @@
   background: var(--clr-bg-dark);
 }
 
-/* ===================== BREAKPOINTS (3) ===================== */
+/* ===================== BREAKPOINTS (de menor a mayor) ===================== */
 
-/* Tablet <=900px */
-@media (max-width: 900px) {
-  .rays__bg {
-    display: none; /* ✅ oculta los rayos */
+/* 📱 MOBILE MUY PEQUEÑO: 0–374px (360, etc.) */
+@media (max-width: 374px) {
+  .rays {
+    padding: 8vh 0;
+
+    /* Arte */
+    --bg-w: 100vw;
+    --bg-right: 0%;
+
+    /* 💰 COINS mobile pequeño */
+    --coins-x: 70;
+    --coins-y: 92;
+    --coins-w: 22;
+
+    /* 🧻 STICKER mobile pequeño */
+    --sticker-top: 0.25em;
+    --sticker-right: -0.5em;
   }
 
+  .rays__bg {
+    display: none;
+  }
+
+  .rays__content {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    padding-inline: 16px;
+    top: auto;
+    margin-top: 8vh;
+  }
+
+  .rays__art {
+    z-index: 20;
+  }
+
+  .rays__coins {
+    z-index: 21;
+  }
+
+  .section-spacer {
+    display: none;
+  }
+}
+
+/* 📱 MOBILE MEDIANO: 375px–600px (iPhone 12/13, etc.) */
+@media (min-width: 375px) and (max-width: 600px) {
   .rays {
+    padding: 8vh 0;
+
+    /* Arte */
+    --bg-w: 100vw;
+    --bg-right: 0%;
+
+    /* 💰 COINS mobile mediano */
+    --coins-x: 55;
+    --coins-y: 90;
+    --coins-w: 26;
+
+    /* 🧻 STICKER mobile mediano */
+    --sticker-top: -2.1em;
+    --sticker-right: 4.8em;
+  }
+
+  .rays__sticker {
+    width: clamp(90px, 12vw, 120px);
+  }
+
+  .rays__bg {
+    display: none;
+  }
+
+  .rays__content {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    padding-inline: 16px;
+    top: auto;
+    margin-top: 12vh;
+  }
+
+  .rays__art {
+    z-index: 20;
+  }
+
+  .rays__coins {
+    z-index: 21;
+  }
+
+  .section-spacer {
+    display: none;
+  }
+}
+
+/* 📱 TABLET PEQUEÑO: 601px–767px (sin rays) */
+@media (min-width: 601px) and (max-width: 767px) {
+  .rays {
+    /* Arte */
     --bg-w: 70vw;
     --bg-right: -10%;
+
+    /* 💰 COINS tablet pequeño */
     --coins-x: 44;
     --coins-y: 68;
     --coins-w: 32;
+
+    /* 🧻 STICKER tablet pequeño */
     --sticker-top: -0.5em;
     --sticker-right: -1.25em;
   }
 
+  .rays__bg {
+    display: none;
+  }
+
   .rays__content {
-    width: 50vw; /* ✅ igual en tablet */
+    width: 60vw;
+    top: auto;
+    margin-top: 12vh;
+  }
+
+  .section-spacer {
+    height: clamp(3vh, 6vh + 1vw, 8vh);
   }
 }
 
-/* Mobile <=600px */
-@media (max-width: 600px) {
-  .rays__bg {
-    display: none; /* ✅ oculta rayos también en mobile */
+/* 📱 TABLET: 768px–900px (CON rays visibles) */
+@media (min-width: 768px) and (max-width: 900px) {
+  .rays {
+    /* Arte */
+    --bg-w: 70vw;
+    --bg-right: -10%;
+
+    /* 💰 COINS tablet 768 */
+    --coins-x: 44;
+    --coins-y: 68;
+    --coins-w: 32;
+
+    /* 🧻 STICKER tablet 768 */
+    --sticker-top: -2.25em;
+    --sticker-right: 9em;
   }
 
-  .rays {
-    --bg-w: 100vw;
-    --bg-right: 0%;
-    --coins-x: 75;
-    --coins-y: 95;
-    --coins-w: 24;
-    --sticker-top: 0.25em;
-    --sticker-right: -0.75em;
-    padding-inline: 0;
-    --sticker-top: 0.5em; /* + abajo / - arriba */
-    --sticker-right: -1em; /* - hacia afuera / + hacia adentro */
+  .rays__bg {
+    display: block; /* ✅ Rays visibles en 768-900 */
   }
 
   .rays__content {
-    width: 100%; /* ✅ ocupa todo el ancho */
-    max-width: none;
-    box-sizing: border-box;
-    padding-inline: 16px; /* respirito lateral */
+    width: 60vw;
+    top: auto;
+    margin-top: 20vh;
   }
-  .rays__art {
-    z-index: 20; /* > que .rays__content (10) */
+
+  .section-spacer {
+    height: clamp(3vh, 6vh + 1vw, 8vh);
   }
-  .rays__coins {
-    z-index: 21; /* por si el sticker está encima; opcional */
+}
+
+/* 💻 DESKTOP PEQUEÑO: 901px–1024px (laptops, iPad landscape) */
+@media (min-width: 901px) and (max-width: 1024px) {
+  .rays {
+    min-height: 100vh;
+
+    /* 🎯 Ajustes específicos para 1024 */
+    --text-top: 25vh;
+
+    /* 💰 COINS desktop pequeño */
+    --coins-x: 43;
+    --coins-y: 70;
+    --coins-w: 28;
+
+    /* 🧻 STICKER desktop pequeño */
+    --sticker-top: -3em;
+    --sticker-right: 8em;
+  }
+
+  .rays__bg {
+    display: block;
+  }
+
+  .rays__content {
+    top: var(--text-top);
+    margin-top: 0;
+  }
+}
+
+/* 💻 DESKTOP MEDIANO: 1025px–1439px */
+@media (min-width: 1025px) and (max-width: 1439px) {
+  .rays {
+    min-height: 100vh;
+
+    /* 🎯 Ajustes para pantallas 1280-1366 */
+    --text-top: 28vh;
+
+    /* 💰 COINS desktop mediano */
+    --coins-x: 43;
+    --coins-y: 70;
+    --coins-w: 28;
+
+    /* 🧻 STICKER desktop mediano */
+    --sticker-top: -4em;
+    --sticker-right: 10em;
+  }
+
+  .rays__bg {
+    display: block;
+  }
+
+  .rays__content {
+    top: var(--text-top);
+    margin-top: 0;
+  }
+}
+
+/* 🖥 DESKTOP GRANDE: >= 1440px (usa los valores base) */
+@media (min-width: 1440px) {
+  .rays {
+    min-height: 100vh;
+    --sticker-right: 10.9em;
+    --sticker-top: -4.4em;
+  }
+
+  .rays__bg {
+    display: block;
+  }
+
+  .rays__content {
+    top: var(--text-top); /* 32vh del base */
+    margin-top: 0;
   }
 }
