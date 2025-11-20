@@ -103,13 +103,13 @@
     --bg-right: 0%;
 
     /* 💰 COINS mobile pequeño */
-    --coins-x: 70;
-    --coins-y: 92;
-    --coins-w: 22;
+    --coins-x: 80;
+    --coins-y: 68;
+    --coins-w: 32;
 
     /* 🧻 STICKER mobile pequeño */
-    --sticker-top: 0.25em;
-    --sticker-right: -0.5em;
+    --sticker-top: -1.6em;
+    --sticker-right: 11.5em;
   }
 
   .rays__bg {
@@ -149,7 +149,7 @@
 
     /* 💰 COINS mobile mediano */
     --coins-x: 55;
-    --coins-y: 90;
+    --coins-y: 118;
     --coins-w: 26;
 
     /* 🧻 STICKER mobile mediano */

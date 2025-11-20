@@ -33,15 +33,37 @@
   margin: 0;
   line-height: 102%;
   text-align: center;
-  text-wrap: balance;
+
+  /* --- FIX PARA IOS (iPhone 13/14/16) --- */
+  text-wrap: initial; /* IMPORTANTE: Eliminado 'balance' para evitar apilamiento */
+  white-space: normal; /* Flujo de texto estándar */
+
+  /* Optimizaciones de renderizado */
+  text-rendering: auto; /* Evita que 'optimizeLegibility' rompa el layout inline */
+  -webkit-font-smoothing: antialiased;
+
+  /* Mantenemos propiedades de ruptura seguras */
   hyphens: none;
   overflow-wrap: normal;
   word-break: normal;
+
+  /* --- ESTADO INICIAL (CORTINA) --- */
+  /* El texto empieza oculto para que nadie vea el cálculo de JS */
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Clase que el JS añade cuando todo está listo */
+.main-text.is-ready {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease-out; /* Aparición suave */
 }
 
 /* --------------------- GSAP SPLITTEXT HELPERS --------------------- */
 .split-word {
   display: inline-block;
+  white-space: nowrap; /* Asegura que la palabra no se rompa internamente */
 }
 
 .split-char {
@@ -91,11 +113,7 @@
 
 @media (max-width: 768px) {
   .bg-headline .bg-line {
-    font-size: clamp(
-      9rem,
-      24vw,
-      32rem
-    ); /* más grande pero mantiene proporción */
+    font-size: clamp(9rem, 24vw, 32rem);
   }
   .bg-headline {
     gap: clamp(2.5rem, 5.5vh, 6.5rem);
