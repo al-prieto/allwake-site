@@ -24,7 +24,9 @@
   height: 100%;
   animation: scroll-infinite 30s linear infinite;
   width: max-content;
-  will-change: transform;
+  /* will-change: transform; */
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 
 .metric-card {
@@ -38,6 +40,13 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+  /* Fix extra para bordes redondeados con imágenes en Safari */
+  mask-image: radial-gradient(white, black);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
 /* Overlay oscuro como el original */
