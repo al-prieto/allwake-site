@@ -1,11 +1,12 @@
 /* src/styles/scroll-lines.css */
+
 /* ============================================
-   SCROLLING TEXT LINES (MWG-style, scoped)
+   SCROLLING TEXT LINES (Optimized for iOS)
    ============================================ */
 
 /* Contenedor del efecto */
 .scroll-lines {
-  padding: 10vh 0;
+  padding: 10vh var(--grid-margin, 6vw);
   display: grid;
   place-items: center;
   isolation: isolate; /* evita bleed de efectos */
@@ -39,7 +40,24 @@
   font-size: clamp(54px, 16vw, 250px);
   overflow: hidden; /* máscara del slide */
   height: 0.8em; /* altura visible de la letra */
-  will-change: transform;
+
+  /* IMPORTANTE: 'will-change' eliminado para evitar saturar la memoria de video en iOS */
+}
+
+/* Spans animables (sale/entra) - REGLA UNIFICADA */
+.scroll-lines .letter span {
+  display: inline-block;
+  position: relative;
+  padding: 0.01em 0 0.08em; /* aire vertical para que no “toquen” */
+
+  /* --- OPTIMIZACIÓN IOS --- */
+  /* Activa la GPU sin crear texturas pesadas (mejor que will-change aquí) */
+  transform: translate3d(0, 0, 0);
+
+  /* Evita parpadeos y bordes serrados en Safari */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Espacio entre palabras */
@@ -49,20 +67,10 @@
   overflow: visible;
 }
 
-/* Spans animables (sale/entra) */
-.scroll-lines .letter span {
-  display: inline-block;
-  position: relative;
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  padding: 0.01em 0 0.08em; /* aire vertical para que no “toquen” */
-}
-
 /* El que sale (visible al inicio) */
 .scroll-lines .letter span:first-child {
   z-index: 2;
-  transform: translateY(0%);
+  /* El transform inicial lo maneja GSAP o el translate3d base */
 }
 
 /* El duplicado que entra desde arriba */
@@ -71,7 +79,6 @@
   bottom: 100%;
   left: 0;
   z-index: 1;
-  transform: translateY(0%);
 }
 
 /* Responsive fino */
@@ -80,12 +87,9 @@
     gap: 0.03em;
   }
 }
+
 @media (max-width: 768px) {
   .scroll-lines .lines {
     gap: 0.8rem;
   }
-}
-
-.scroll-lines {
-  padding: 10vh var(--grid-margin, 6vw);
 }

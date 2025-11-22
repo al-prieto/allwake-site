@@ -18,31 +18,42 @@ import { initAnimations } from './animations/index.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Inicializar Lenis (smooth scrolling)
+// 1. Optimización CLAVE para iOS: Evita recálculos al mover la barra de dirección
+ScrollTrigger.config({
+  ignoreMobileResize: true,
+});
+
+// 2. Inicializar Lenis con configuración Mobile
 const lenis = new Lenis({
-  lerp: 0.1, // suavidad del scroll (0.1 = muy suave, 0.3 = más rápido)
-  wheelMultiplier: 1, // sensibilidad del scroll
+  lerp: 0.1,
+  wheelMultiplier: 1,
   gestureOrientation: 'vertical',
   normalizeWheel: false,
-  smoothTouch: false, // desactiva smooth scroll en móvil
+  smoothTouch: true, // Activo para unificar la física en iOS/Android
+  touchMultiplier: 1.5,
+  infinite: false,
 });
 
-// Conectar Lenis con GSAP ScrollTrigger
+// 3. Sincronización Perfecta (Lenis + GSAP)
+function raf(time) {
+  lenis.raf(time * 1000); // GSAP da segundos, Lenis necesita ms
+}
+
+// Añadimos Lenis al ticker de GSAP (un solo corazón latiendo)
+gsap.ticker.add(raf);
+
+// RECOMENDADO: Asegura que ScrollTrigger se entere inmediatamente del scroll
 lenis.on('scroll', ScrollTrigger.update);
 
-gsap.ticker.add((time) => {
-  lenis.raf(time * 1000); // convierte de seconds a milliseconds
-});
+// Desactivamos la normalización nativa de ScrollTrigger para que Lenis mande
+ScrollTrigger.normalizeScroll(false);
 
-gsap.ticker.lagSmoothing(0);
-
-// Inicializar animaciones cuando el DOM esté listo
+// 4. Inicialización
 document.addEventListener('DOMContentLoaded', () => {
-  // Esperar a que las fuentes estén cargadas
   document.fonts.ready.then(() => {
     initAnimations();
 
-    // Refresh ScrollTrigger después de que todo esté listo
+    // Refresco final con un pequeño delay para asegurar que el layout está listo
     gsap.delayedCall(0.5, () => {
       ScrollTrigger.refresh();
     });

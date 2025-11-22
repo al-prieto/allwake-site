@@ -88,6 +88,21 @@
   will-change: transform;
 }
 
+.mwg_landing1 .letter span {
+  /* Truco para activar la GPU en iOS sin emborronar el texto */
+  transform: translate3d(0, 0, 0);
+
+  /* Evita parpadeos en Safari */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  /* Mejora la renderización de fuentes en animaciones */
+  -webkit-font-smoothing: antialiased;
+
+  /* IMPORTANTE: No uses will-change: transform en TODOS los elementos a la vez.
+     GSAP ya lo añade durante la animación. Si lo tienes en el CSS fijo, quítalo. */
+}
+
 /* Body de la sección (lo tuyo + nota) */
 .section-showcase__body {
   min-height: 50vh;

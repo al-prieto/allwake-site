@@ -6,21 +6,38 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  touch-action: pan-y;
 }
 
-html,
+html {
+  width: 100%;
+  overflow-x: clip;
+  background: var(--clr-bg-dark);
+}
+
 body {
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
+  /* Aplicamos el control de eje X solo al body */
+  overflow-x: clip;
   background: var(--clr-bg-dark);
+  /* Asegura que el scroll táctil sea nativo y fluido */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* --------------------- HERO CONTAINER --------------------- */
 .hero {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: clip;
+
+  /* ESTA ES LA MAGIA PARA IOS: */
+  /* Le dice al navegador: "Permite el scroll vertical (pan-y) sin esperar" */
+  touch-action: pan-y;
+
+  /* Asegura que no capture clicks innecesarios */
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .hero-imgs {
@@ -310,4 +327,14 @@ body.is-loading {
 .rays__sticker {
   position: relative;
   z-index: 1;
+}
+
+/* --------------------- LENIS FIXES (iOS) --------------------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
