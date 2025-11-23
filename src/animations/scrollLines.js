@@ -15,7 +15,9 @@ const CFG = {
 
 // Build duplicated letters SOLO dentro de la sección
 function buildLines(section) {
-  section.querySelectorAll('.line').forEach((line) => {
+  // Convertir NodeList a Array para iterar más rápido
+  const lines = Array.from(section.querySelectorAll('.line'));
+  lines.forEach((line) => {
     const text = line.dataset.text || '';
     const frag = document.createDocumentFragment();
 

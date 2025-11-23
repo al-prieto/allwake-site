@@ -10,7 +10,7 @@ export function initRays() {
 
   const mainText = section.querySelector('[data-split-words]');
 
-  // Creamos SplitText
+  // SplitText con limpieza automática
   const split = new SplitText(mainText, { type: 'words', wordsClass: 'word' });
   const words = split.words;
 
@@ -24,25 +24,23 @@ export function initRays() {
       trigger: scene,
       start: 'top 80%',
       end: 'bottom 90%',
-      scrub: 0.8, // Scrub suave
+      scrub: 0.5, // Scrub más rápido para evitar sensación de "arrastre"
       markers: false,
     },
     defaults: {
-      force3D: true, // ⚡ CRÍTICO: Obliga a usar la GPU
+      force3D: true,
       ease: 'power1.out',
     },
   });
 
-  // Texto principal
+  // Texto
   tl.from(
     words,
     {
-      scale: 0.8, // Menos cambio de escala reduce el repintado
-      opacity: 0,
+      autoAlpha: 0, // Combina opacity + visibility (Optimización clave)
+      y: 30, // Usar Y en lugar de scale reduce el repintado
       duration: 0.8,
       stagger: 0.05,
-      ease: 'expo.out',
-      delay: 0.2, // Empezar un pelín antes
     },
     0
   );
@@ -50,26 +48,24 @@ export function initRays() {
   tl.from(
     words,
     {
-      xPercent: 60, // Reduje el movimiento para que sea menos costoso
-      rotation: 0.01, // ⚡ Truco para forzar suavizado de bordes en GPU
+      xPercent: 40,
+      rotation: 0.01, // Truco anti-aliasing
       duration: 0.8,
       stagger: 0.05,
-      ease: 'elastic.out(1, 0.75)',
     },
     0
   );
 
-  // Rayos (Background)
+  // Fondo (Rayos)
   if (bg) {
     tl.to(
       bg,
       {
-        opacity: 1,
+        autoAlpha: 1, // Mejor que opacity
         scale: 1,
         duration: 0.5,
-        ease: 'power2.out',
       },
-      0.2
+      0.1
     );
   }
 
@@ -78,13 +74,13 @@ export function initRays() {
     tl.to(
       coins,
       {
-        opacity: 1,
+        autoAlpha: 1,
         scale: 1.05,
-        rotation: () => gsap.utils.random(-10, 10), // Menos rotación aleatoria
+        y: -20, // Añadir movimiento vertical ligero ayuda a la percepción de paralaje
+        rotation: 5, // Rotación fija es más barata que random() en el scrub
         duration: 0.6,
-        ease: 'elastic.out(1, 0.7)',
       },
-      0.3
+      0.2
     );
   }
 
@@ -93,20 +89,12 @@ export function initRays() {
     tl.from(
       sticker,
       {
-        scale: 0,
-        rotation: () => gsap.utils.random(-30, 30),
+        scale: 0.5,
+        autoAlpha: 0,
+        rotation: -15,
         duration: 0.6,
-        ease: 'elastic.out(1, 0.75)',
       },
-      0.5
+      0.4
     );
   }
-
-  const mm = gsap.matchMedia();
-  mm.add('(max-width: 900px)', () => {
-    // Optimizaciones extra para móvil si fuera necesario
-  });
-
-  // Limpieza opcional al desmontar si usas frameworks SPA
-  // return () => { split.revert(); tl.kill(); }
 }

@@ -88,7 +88,10 @@
 /* ===== Spacer ===== */
 .section-spacer {
   height: clamp(8vh, 10vh + 1vw, 16vh);
-  background: var(--clr-bg-dark);
+  background-color: var(--clr-bg-dark);
+
+  isolation: isolate;
+  position: relative;
 }
 
 /* ===================== BREAKPOINTS (de menor a mayor) ===================== */

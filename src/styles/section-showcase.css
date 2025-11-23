@@ -69,6 +69,10 @@
   /* tamaño fluido tipo hero */
   /* font-size: clamp(2.2rem, 8vw, 7.2rem); */
   font-size: clamp(2.8rem, 7vw, 6.8rem);
+
+  /* Asegura que el texto grande no cause repintados del fondo */
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 /* Split helpers (mantén estos) */
