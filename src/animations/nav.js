@@ -33,10 +33,15 @@ export default function navAnimation() {
   // SplitType
   // -------------------------
   /* global SplitType */
-  new SplitType('.menu-item a', { types: 'words, chars' });
-  new SplitType('.menu-item span', { types: 'words, chars' });
-  new SplitType('.menu-title p', { types: 'words, chars' });
-  new SplitType('.menu-content p', { types: 'words, chars' });
+  // Nota: Si SplitType da error de "undefined", asegúrate de importarlo arriba o cargarlo en el HTML
+  try {
+    new SplitType('.menu-item a', { types: 'words, chars' });
+    new SplitType('.menu-item span', { types: 'words, chars' });
+    new SplitType('.menu-title p', { types: 'words, chars' });
+    new SplitType('.menu-content p', { types: 'words, chars' });
+  } catch (e) {
+    console.warn('SplitType no cargó correctamente', e);
+  }
 
   const links = document.querySelectorAll(
     '.menu-item, .menu-sub-item .menu-title, .menu-sub-item .menu-content'
@@ -64,7 +69,12 @@ export default function navAnimation() {
       chs.forEach((c) => c.classList.remove('char-active'));
 
     if (linkElement) {
-      linkElement.addEventListener('mouseenter', () => colorChars(chars));
+      linkElement.addEventListener('mouseenter', () => {
+        // SOLUCIÓN IOS: Solo animar si el dispositivo tiene cursor real
+        if (window.matchMedia('(hover: hover)').matches) {
+          colorChars(chars);
+        }
+      });
       linkElement.addEventListener('mouseleave', () => clearChars(chars));
     }
   });
@@ -74,6 +84,10 @@ export default function navAnimation() {
   // -------------------------
   links.forEach((link) => {
     link.addEventListener('mouseenter', (event) => {
+      // SOLUCIÓN IOS: Bloquea la animación en pantallas táctiles.
+      // Al no haber cambio en el DOM, el iPhone ejecuta el click inmediatamente.
+      if (!window.matchMedia('(hover: hover)').matches) return;
+
       const target = event.currentTarget.querySelector(
         '.menu-item-link a, .menu-title p, .menu-content p'
       );
@@ -103,34 +117,31 @@ export default function navAnimation() {
 
   // Genera el efecto sin perder el texto original ni solapar timers
   function addShuffleEffect(element) {
+    if (!element) return; // seguridad extra
     const chars = element.querySelectorAll('.char');
 
     chars.forEach((char, index) => {
-      // Guarda la letra original una sola vez
       if (!char.dataset.original) {
         char.dataset.original = char.textContent;
       }
 
-      // Cancela timers antiguos si existieran
       if (char.dataset.timer) {
         clearInterval(Number(char.dataset.timer));
         delete char.dataset.timer;
       }
 
-      // Evita animaciones solapadas en el mismo char
       if (char.dataset.animating === '1') return;
       char.dataset.animating = '1';
 
       const original = char.dataset.original;
-      const isUpper = /[A-Z]/.test(original); // respeta mayúsculas
-      const duration = 300 + index * 30; // ligera escalera por índice
+      const isUpper = /[A-Z]/.test(original);
+      const duration = 300 + index * 30;
       const started = Date.now();
 
       const timer = setInterval(() => {
         const r = Math.floor(Math.random() * 26);
         char.textContent = String.fromCharCode((isUpper ? 65 : 97) + r);
 
-        // Fin de animación -> restaurar
         if (Date.now() - started >= duration) {
           clearInterval(timer);
           char.textContent = original;
@@ -143,8 +154,8 @@ export default function navAnimation() {
     });
   }
 
-  // Restaura inmediatamente los caracteres al texto original
   function resetToOriginal(element) {
+    if (!element) return;
     const chars = element.querySelectorAll('.char');
     chars.forEach((char) => {
       if (char.dataset.timer) {
@@ -164,20 +175,19 @@ export default function navAnimation() {
   document.querySelectorAll('.menu-item-link a').forEach((link) => {
     link.addEventListener('click', (e) => {
       const href = link.getAttribute('href');
-      if (!href || !href.startsWith('#')) return; // 🔸 solo procesa anclas
+      // Verificar que el href sea válido y comience con #
+      if (!href || !href.startsWith('#') || href === '#') return;
+
       const target = document.querySelector(href);
       if (!target) return;
 
       e.preventDefault();
 
-      // Cierra el menú antes del scroll
+      // Cierra el menú
       menuContainer.style.left = '-100%';
 
-      // 🔸 compensa la altura del nav fijo (y agrega un pequeño margen)
       const navEl = document.querySelector('nav');
       const offset = (navEl?.getBoundingClientRect().height || 0) + 16;
-
-      // 🔸 calcula posición absoluta del target y descuéntale el offset del nav
       const y =
         target.getBoundingClientRect().top + window.pageYOffset - offset;
 

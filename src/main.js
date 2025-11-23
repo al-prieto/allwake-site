@@ -18,42 +18,45 @@ import { initAnimations } from './animations/index.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// 1. Optimización CLAVE para iOS: Evita recálculos al mover la barra de dirección
+// 1. Optimización clave para iOS
 ScrollTrigger.config({
   ignoreMobileResize: true,
 });
 
-// 2. Inicializar Lenis con configuración Mobile
+// 2. Inicializar Lenis
 const lenis = new Lenis({
   lerp: 0.1,
   wheelMultiplier: 1,
   gestureOrientation: 'vertical',
   normalizeWheel: false,
-  smoothTouch: true, // Activo para unificar la física en iOS/Android
+  smoothTouch: true,
   touchMultiplier: 1.5,
   infinite: false,
 });
 
-// 3. Sincronización Perfecta (Lenis + GSAP)
-function raf(time) {
-  lenis.raf(time * 1000); // GSAP da segundos, Lenis necesita ms
-}
+// --- CAMBIO NUEVO AQUÍ ---
+// Hacemos Lenis global para poder activarlo desde hero.js
+window.lenis = lenis;
 
-// Añadimos Lenis al ticker de GSAP (un solo corazón latiendo)
+// Detenemos el scroll INMEDIATAMENTE al cargar
+lenis.stop();
+// -------------------------
+
+// 3. Sincronización Lenis + GSAP
+gsap.ticker.remove(gsap.ticker.lagSmoothing);
+
+function raf(time) {
+  lenis.raf(time * 1000);
+}
 gsap.ticker.add(raf);
 
-// RECOMENDADO: Asegura que ScrollTrigger se entere inmediatamente del scroll
-lenis.on('scroll', ScrollTrigger.update);
-
-// Desactivamos la normalización nativa de ScrollTrigger para que Lenis mande
+// Opcional: ayuda a que ScrollTrigger no pelee con Lenis
 ScrollTrigger.normalizeScroll(false);
 
-// 4. Inicialización
+// 4. Init
 document.addEventListener('DOMContentLoaded', () => {
   document.fonts.ready.then(() => {
     initAnimations();
-
-    // Refresco final con un pequeño delay para asegurar que el layout está listo
     gsap.delayedCall(0.5, () => {
       ScrollTrigger.refresh();
     });

@@ -140,6 +140,15 @@ export default function heroAnimation() {
 
       document.documentElement.classList.add('nav-ready');
 
+      // --- CAMBIO NUEVO AQUÍ ---
+      // Reactivar Lenis para permitir scroll
+      if (window.lenis) {
+        window.lenis.start();
+        // Forzamos posición 0 por si el navegador guardó posición previa
+        window.scrollTo(0, 0);
+      }
+      // -------------------------
+
       initParallax();
 
       // Refrescar medidas por si el layout cambió y asegurar posición inicial
