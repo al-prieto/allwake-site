@@ -170,12 +170,11 @@ export default function navAnimation() {
   }
 
   // =========================
-  // Smooth scroll para anclas
+  // Smooth scroll "Premium" usando Lenis
   // =========================
   document.querySelectorAll('.menu-item-link a').forEach((link) => {
     link.addEventListener('click', (e) => {
       const href = link.getAttribute('href');
-      // Verificar que el href sea válido y comience con #
       if (!href || !href.startsWith('#') || href === '#') return;
 
       const target = document.querySelector(href);
@@ -185,16 +184,25 @@ export default function navAnimation() {
 
       // Cierra el menú
       menuContainer.style.left = '-100%';
+      animateMenuItems(menuItems, 'out'); // Opcional: anima salida items también
 
+      // Cálculo del offset (altura del nav + un poquito de aire)
       const navEl = document.querySelector('nav');
-      const offset = (navEl?.getBoundingClientRect().height || 0) + 16;
-      const y =
-        target.getBoundingClientRect().top + window.pageYOffset - offset;
+      const offsetVal = (navEl?.getBoundingClientRect().height || 0) + 20;
 
-      window.scrollTo({
-        top: y,
-        behavior: 'smooth',
-      });
+      // USAR LENIS SI EXISTE (Esto es lo que da la suavidad)
+      if (window.lenis) {
+        window.lenis.scrollTo(target, {
+          offset: -offsetVal,
+          duration: 2, // <--- Ajusta esto: más alto = más lento y suave (ej: 1.5 a 2.5)
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Easing "exponential out" suave
+        });
+      } else {
+        // Fallback por si acaso
+        const y =
+          target.getBoundingClientRect().top + window.pageYOffset - offsetVal;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
     });
   });
 }

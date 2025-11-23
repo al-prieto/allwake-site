@@ -1,4 +1,4 @@
-// ALLWAKE RAYS SECTION
+// src/animations/rays.js
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import SplitText from 'gsap/SplitText';
@@ -9,6 +9,8 @@ export function initRays() {
   if (!section) return;
 
   const mainText = section.querySelector('[data-split-words]');
+
+  // Creamos SplitText
   const split = new SplitText(mainText, { type: 'words', wordsClass: 'word' });
   const words = split.words;
 
@@ -22,8 +24,12 @@ export function initRays() {
       trigger: scene,
       start: 'top 80%',
       end: 'bottom 90%',
-      scrub: 0.8,
+      scrub: 0.8, // Scrub suave
       markers: false,
+    },
+    defaults: {
+      force3D: true, // ⚡ CRÍTICO: Obliga a usar la GPU
+      ease: 'power1.out',
     },
   });
 
@@ -31,71 +37,76 @@ export function initRays() {
   tl.from(
     words,
     {
-      scale: 0,
+      scale: 0.8, // Menos cambio de escala reduce el repintado
+      opacity: 0,
       duration: 0.8,
       stagger: 0.05,
       ease: 'expo.out',
-      delay: 0.6,
+      delay: 0.2, // Empezar un pelín antes
     },
-    0.6
+    0
   );
 
   tl.from(
     words,
     {
-      xPercent: 100,
-      rotate: 0.001,
+      xPercent: 60, // Reduje el movimiento para que sea menos costoso
+      rotation: 0.01, // ⚡ Truco para forzar suavizado de bordes en GPU
       duration: 0.8,
       stagger: 0.05,
       ease: 'elastic.out(1, 0.75)',
     },
-    0.2
+    0
   );
 
-  // Rayos
-  tl.to(
-    bg,
-    {
-      opacity: 1,
-      scale: 1,
-      duration: 0.5,
-      ease: 'power2.out',
-      delay: 0.4,
-    },
-    0.8
-  );
+  // Rayos (Background)
+  if (bg) {
+    tl.to(
+      bg,
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 0.5,
+        ease: 'power2.out',
+      },
+      0.2
+    );
+  }
 
   // Monedas
-  tl.to(
-    coins,
-    {
-      opacity: 1,
-      scale: 1.05,
-      rotation: gsap.utils.random(-15, 15),
-      duration: 0.6,
-      ease: 'elastic.out(1, 0.7)',
-      delay: 0.4,
-    },
-    1.05
-  );
+  if (coins) {
+    tl.to(
+      coins,
+      {
+        opacity: 1,
+        scale: 1.05,
+        rotation: () => gsap.utils.random(-10, 10), // Menos rotación aleatoria
+        duration: 0.6,
+        ease: 'elastic.out(1, 0.7)',
+      },
+      0.3
+    );
+  }
 
   // Sticker
-  tl.from(
-    sticker,
-    {
-      scale: 0,
-      rotation: gsap.utils.random(-45, 45),
-      // xPercent: gsap.utils.random(-30, 30),
-      // yPercent: gsap.utils.random(-30, 30),
-      duration: 0.6,
-      ease: 'elastic.out(1, 0.75)',
-      delay: 0.4,
-    },
-    1.5
-  );
+  if (sticker) {
+    tl.from(
+      sticker,
+      {
+        scale: 0,
+        rotation: () => gsap.utils.random(-30, 30),
+        duration: 0.6,
+        ease: 'elastic.out(1, 0.75)',
+      },
+      0.5
+    );
+  }
+
   const mm = gsap.matchMedia();
   mm.add('(max-width: 900px)', () => {
-    // puedes ajustar easings/durations sólo para mobile si ves necesario
-    // p.ej. tl.timeScale(1.2);
+    // Optimizaciones extra para móvil si fuera necesario
   });
+
+  // Limpieza opcional al desmontar si usas frameworks SPA
+  // return () => { split.revert(); tl.kill(); }
 }
