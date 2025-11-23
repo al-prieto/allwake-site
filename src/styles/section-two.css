@@ -119,3 +119,36 @@
     gap: clamp(2.5rem, 5.5vh, 6.5rem);
   }
 }
+
+/* src/styles/section-two.css */
+
+/* ... (tu código anterior) ... */
+
+/* --------------------- OPTIMIZACIONES IOS (GPU) --------------------- */
+
+/* 1. El texto principal que cambia de color */
+.split-char,
+.split-word {
+  /* Prepara la capa para cambios de pintura (color) sin afectar layout */
+  will-change: color, opacity;
+
+  /* Estabilidad en iOS */
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* 2. El título de fondo gigante (THE VISION) */
+/* Este es el más pesado porque usa blur y escala */
+.bg-headline .bg-line {
+  /* Le decimos al navegador que esto va a cambiar mucho */
+  will-change: transform, opacity, filter;
+
+  /* GPU Hack */
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  /* Evita que el blur recorte los bordes en Safari */
+  -webkit-transform-style: preserve-3d;
+}
